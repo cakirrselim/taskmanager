@@ -64,22 +64,19 @@ public class UsersServiceImpl implements UsersService {
     @Override
     @Transactional
     public UsersAddResponseModel findByUsername(String username) {
-        usersDao.findByUsername(username);
+
+        Users user = usersDao.findByUsername(username);
         UsersAddResponseModel usersAddResponseModel = new UsersAddResponseModel(
-                usersDao.findByUsername(username).getId(), usersDao.findByUsername(username).getName(), usersDao.findByUsername(username).getSurname(),
-                usersDao.findByUsername(username).getUsername(), usersDao.findByUsername(username).getPassword(),
-                usersDao.findByUsername(username).getMail());
+                user.getId(), user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getMail());
         return usersAddResponseModel;
     }
 
     @Override
     @Transactional
     public UsersAddResponseModel findByEmail(String email) {
-        usersDao.findByEmail(email);
+        Users user = usersDao.findByEmail(email);
         UsersAddResponseModel usersAddResponseModel = new UsersAddResponseModel(
-                usersDao.findByEmail(email).getId(), usersDao.findByUsername(email).getName(),
-                usersDao.findByEmail(email).getSurname(), usersDao.findByUsername(email).getUsername(),
-                usersDao.findByUsername(email).getPassword(), usersDao.findByUsername(email).getMail());
-        return null;
+                user.getId(), user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getMail());
+        return usersAddResponseModel;
     }
 }
