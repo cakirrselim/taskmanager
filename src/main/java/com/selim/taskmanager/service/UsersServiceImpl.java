@@ -20,14 +20,12 @@ public class UsersServiceImpl implements UsersService {
 
 
     @Override
-    @Transactional
     public List<UsersAddResponseModel> getAllUsers() {
         List<Users> users = usersDao.getAllUsers();
         return users.stream().map(u -> new UsersAddResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail())).toList();
     }
 
     @Override
-    @Transactional
     public UsersAddResponseModel addUser(UsersAddRequestModel usersAddRequestModel) {
         Users users = new Users();
         users.setName(usersAddRequestModel.name());
@@ -43,7 +41,6 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    @Transactional
     public void updateUser(UsersAddRequestModel usersAddRequestModel) {
         Users users = new Users();
         users.setId(usersAddRequestModel.id());
@@ -56,13 +53,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    @Transactional
     public void deleteUser(int id) {
         usersDao.deleteUser(id);
     }
 
     @Override
-    @Transactional
     public UsersAddResponseModel findByUsername(String username) {
 
         Users user = usersDao.findByUsername(username);
@@ -72,7 +67,6 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    @Transactional
     public UsersAddResponseModel findByEmail(String email) {
         Users user = usersDao.findByEmail(email);
         UsersAddResponseModel usersAddResponseModel = new UsersAddResponseModel(

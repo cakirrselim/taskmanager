@@ -4,7 +4,6 @@ import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 public interface UsersController {
@@ -23,7 +22,7 @@ public interface UsersController {
     @GetMapping("/showUsername/{username}")
     ResponseEntity<UsersAddResponseModel> findByUsername(@PathVariable String username);
 
-    @GetMapping("/showEmail/{mail}")
-    ResponseEntity<UsersAddResponseModel> findByEmail(@PathVariable String mail);
+    @GetMapping("/showEmail/{email}")
+    ResponseEntity<UsersAddResponseModel> findByEmail(@PathVariable String email);
 
 }

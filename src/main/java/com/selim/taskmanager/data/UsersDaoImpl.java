@@ -65,7 +65,7 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public Users findByEmail(String email) {
-        String sql = "select * from users where email = ?";
+        String sql = "select * from users where mail = ?";
         Users user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Users.class), email);
         return user;
     }
