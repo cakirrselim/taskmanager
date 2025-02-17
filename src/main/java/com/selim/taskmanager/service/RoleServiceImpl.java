@@ -4,6 +4,7 @@ import com.selim.taskmanager.data.RoleDao;
 import com.selim.taskmanager.entitiy.Role;
 import com.selim.taskmanager.rest.model.RoleAddRequestModel;
 import com.selim.taskmanager.rest.model.RoleAddResponseModel;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +21,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleAddResponseModel addRole(RoleAddRequestModel roleAddRequestModel) {
         Role role = new Role();
-        role.setId(UUID.randomUUID());
+        role.setId(roleAddRequestModel.id());
+        //role.setId(UUID.randomUUID());
         role.setName(roleAddRequestModel.name());
         role.setDescription(roleAddRequestModel.description());
         Role savedRole = roleDao.addRole(role);
+
         RoleAddResponseModel roleAddResponseModel = new RoleAddResponseModel(
                 savedRole.getId(), savedRole.getName(), savedRole.getDescription());
         return roleAddResponseModel;
@@ -37,24 +40,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateRole(RoleAddRequestModel roleAddRequestModel) {
         Role role = new Role();
-        role.setId(UUID.randomUUID());
+        role.setId(roleAddRequestModel.id());
         role.setName(roleAddRequestModel.name());
         role.setDescription(roleAddRequestModel.description());
         roleDao.updateRole(role);
-    }
-
-    @Override
-    public void updateDescription(RoleAddRequestModel roleAddRequestModel) {
-        Role role = new Role();
-        role.setId(UUID.randomUUID());
-        role.setDescription(roleAddRequestModel.description());
-        roleDao.updateDescription(role);
-    }
-
-    @Override
-    public void deleteDescription(UUID roleId) {
-        roleDao.deleteDescription(roleId);
-
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface RoleController {
 
-    @PostMapping("/add")  // 2 KERE EKLİYOR
+    @PostMapping("/add")  //
     ResponseEntity<RoleAddResponseModel> addRole(@RequestBody RoleAddRequestModel roleAddRequestModel);
 
     @DeleteMapping("/deleteRole/{id}")  // OK
@@ -19,12 +19,6 @@ public interface RoleController {
 
     @PostMapping("/updateRole") // -
     ResponseEntity<String> updateRole(@RequestBody RoleAddRequestModel roleAddRequestModel);
-
-    @PostMapping("/updateDescription") // -
-    ResponseEntity<String> updateDescription(@RequestBody RoleAddRequestModel roleAddRequestModel);
-
-    @DeleteMapping("/deleteDescription/{id}")  // OK
-    ResponseEntity<String> deleteDescription(@PathVariable UUID id);
 
     @GetMapping("/show")  // OK
     ResponseEntity<List<RoleAddResponseModel>> showRole();
@@ -34,7 +28,5 @@ public interface RoleController {
 
     @GetMapping("/showById/{id}") // OK
     ResponseEntity<RoleAddResponseModel> getRoleById(@PathVariable UUID id);
-
-
 
 }

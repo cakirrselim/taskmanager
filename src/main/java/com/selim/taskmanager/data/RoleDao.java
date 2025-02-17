@@ -8,11 +8,7 @@ public interface RoleDao {
     Role addRole(Role role);
     void deleteRole(UUID roleId);
     void updateRole(Role role);
-    void updateDescription(Role role);
-    void deleteDescription(UUID roleId);
     List<Role> getAllRoles();
     Role getRoleByName(String roleName);
     Role getRoleById(UUID id);
-
-
 }

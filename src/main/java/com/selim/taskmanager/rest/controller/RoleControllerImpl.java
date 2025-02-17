@@ -4,6 +4,7 @@ import com.selim.taskmanager.rest.model.RoleAddRequestModel;
 import com.selim.taskmanager.rest.model.RoleAddResponseModel;
 import com.selim.taskmanager.service.RoleService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,19 +35,7 @@ public class RoleControllerImpl implements RoleController {
     @Override
     public ResponseEntity<String> updateRole(RoleAddRequestModel roleAddRequestModel) {
         roleService.updateRole(roleAddRequestModel);
-        return ResponseEntity.ok("Role with id \" + id + \" has been updated");
-    }
-
-    @Override
-    public ResponseEntity<String> updateDescription(RoleAddRequestModel roleAddRequestModel) {
-        roleService.updateDescription(roleAddRequestModel);
-        return ResponseEntity.ok("Role with id \" + id + \" has been updated");
-    }
-
-    @Override
-    public ResponseEntity<String> deleteDescription(UUID id) {
-        roleService.deleteDescription(id);
-        return ResponseEntity.ok("Role with id \" + id + \" has been deleted");
+        return ResponseEntity.ok("UPDATED");
     }
 
     @Override

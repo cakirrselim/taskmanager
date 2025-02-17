@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -24,7 +26,7 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public Role addRole(Role role) {
         String sql = "INSERT INTO role (name, description) VALUES (?, ?)";
-        jdbcTemplate.update(sql, role.getName(), role.getDescription());
+        //jdbcTemplate.update(sql, role.getName(), role.getDescription());
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(conn->{
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -45,20 +47,8 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public void updateRole(Role role) {
         String sql = "UPDATE role SET name = ?, description = ? WHERE id = ?";
-        jdbcTemplate.update(sql, role.getName(), role.getDescription(), role.getId());
-    }
-
-    @Override
-    public void updateDescription(Role role) {
-        String sql = "UPDATE role SET description = ? WHERE id = ?";
-        jdbcTemplate.update(sql, role.getDescription(), role.getId());
-    }
-
-    @Override
-    public void deleteDescription(UUID roleId) {
-        String sql = "UPDATE role SET description = null WHERE id = ?";
-        jdbcTemplate.update(sql, roleId);
-
+        jdbcTemplate.update(sql,
+                role.getName(), role.getDescription(), role.getId());
     }
 
     @Override
@@ -71,7 +61,7 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public Role getRoleByName(String roleName) {
         String sql = "SELECT * FROM role WHERE name = ?";
-        Role role = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Role.class), roleName);
+        Role role = (Role) jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Role.class), roleName);
         return role;
     }
 
