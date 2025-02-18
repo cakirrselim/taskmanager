@@ -1,13 +1,10 @@
 package com.selim.taskmanager.data;
 
-
 import com.selim.taskmanager.entitiy.Role;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;

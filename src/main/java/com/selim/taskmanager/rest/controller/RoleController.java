@@ -3,7 +3,6 @@ package com.selim.taskmanager.rest.controller;
 import com.selim.taskmanager.rest.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 

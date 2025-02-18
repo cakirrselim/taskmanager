@@ -4,8 +4,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.hibernate.annotations.UuidGenerator;
-
 import java.util.UUID;
 
 public class Role {
@@ -20,16 +18,7 @@ public class Role {
     @Column(name = "description")
     private String description;
 
-
-
-    public Role(UUID id, String name,  String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
     public Role() {
-
     }
 
     public UUID getId() {

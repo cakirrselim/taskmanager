@@ -6,10 +6,8 @@ import com.selim.taskmanager.rest.model.RoleShowResponseModel;
 import com.selim.taskmanager.rest.model.RoleUpdateRequestModel;
 import com.selim.taskmanager.service.RoleService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.UUID;
 

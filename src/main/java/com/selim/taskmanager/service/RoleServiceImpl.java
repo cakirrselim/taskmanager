@@ -6,9 +6,7 @@ import com.selim.taskmanager.rest.model.RoleAddRequestModel;
 import com.selim.taskmanager.rest.model.RoleAddResponseModel;
 import com.selim.taskmanager.rest.model.RoleShowResponseModel;
 import com.selim.taskmanager.rest.model.RoleUpdateRequestModel;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 
