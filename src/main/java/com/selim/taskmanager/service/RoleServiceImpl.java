@@ -4,6 +4,8 @@ import com.selim.taskmanager.data.RoleDao;
 import com.selim.taskmanager.entitiy.Role;
 import com.selim.taskmanager.rest.model.RoleAddRequestModel;
 import com.selim.taskmanager.rest.model.RoleAddResponseModel;
+import com.selim.taskmanager.rest.model.RoleShowResponseModel;
+import com.selim.taskmanager.rest.model.RoleUpdateRequestModel;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,6 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleAddResponseModel addRole(RoleAddRequestModel roleAddRequestModel) {
         Role role = new Role();
-        role.setId(roleAddRequestModel.id());
-        //role.setId(UUID.randomUUID());
         role.setName(roleAddRequestModel.name());
         role.setDescription(roleAddRequestModel.description());
         Role savedRole = roleDao.addRole(role);
@@ -38,18 +38,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void updateRole(RoleAddRequestModel roleAddRequestModel) {
+    public void updateRole(RoleUpdateRequestModel roleUpdateRequestModel) {
         Role role = new Role();
-        role.setId(roleAddRequestModel.id());
-        role.setName(roleAddRequestModel.name());
-        role.setDescription(roleAddRequestModel.description());
+        role.setId(roleUpdateRequestModel.id());
+        role.setName(roleUpdateRequestModel.name());
+        role.setDescription(roleUpdateRequestModel.description());
         roleDao.updateRole(role);
     }
 
     @Override
-    public List<RoleAddResponseModel> getAllRoles() {
+    public List<RoleShowResponseModel> getAllRoles() {
         List<Role> roles = roleDao.getAllRoles();
-        return roles.stream().map(r -> new RoleAddResponseModel(r.getId(), r.getName(), r.getDescription())).toList();
+        return roles.stream().map(r -> new RoleShowResponseModel(r.getId(), r.getName(), r.getDescription())).toList();
     }
 
     @Override

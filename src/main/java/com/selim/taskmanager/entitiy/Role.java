@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Role {
     @Id
     @GeneratedValue(generator = "uuid-generator", strategy = GenerationType.UUID)
-    @Column(name = "id", unique = true, nullable = false, updatable = false)
+    // @Column(name = "id", unique = true, nullable = false, updatable = false)
     private UUID id;
 
     @Column(name = "name")
@@ -20,15 +20,18 @@ public class Role {
     @Column(name = "description")
     private String description;
 
-    public Role() {
-        this.id = UUID.randomUUID();
-    }
+
 
     public Role(UUID id, String name,  String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
+
+    public Role() {
+
+    }
+
     public UUID getId() {
         return id;
     }

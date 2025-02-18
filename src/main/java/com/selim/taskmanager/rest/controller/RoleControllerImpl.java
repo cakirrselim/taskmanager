@@ -2,6 +2,8 @@ package com.selim.taskmanager.rest.controller;
 
 import com.selim.taskmanager.rest.model.RoleAddRequestModel;
 import com.selim.taskmanager.rest.model.RoleAddResponseModel;
+import com.selim.taskmanager.rest.model.RoleShowResponseModel;
+import com.selim.taskmanager.rest.model.RoleUpdateRequestModel;
 import com.selim.taskmanager.service.RoleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +35,13 @@ public class RoleControllerImpl implements RoleController {
     }
 
     @Override
-    public ResponseEntity<String> updateRole(RoleAddRequestModel roleAddRequestModel) {
-        roleService.updateRole(roleAddRequestModel);
+    public ResponseEntity<String> updateRole(RoleUpdateRequestModel roleUpdateRequestModel) {
+        roleService.updateRole(roleUpdateRequestModel);
         return ResponseEntity.ok("UPDATED");
     }
 
     @Override
-    public ResponseEntity<List<RoleAddResponseModel>> showRole() {
+    public ResponseEntity<List<RoleShowResponseModel>> showRole() {
         return ResponseEntity.ok(roleService.getAllRoles());
     }
 

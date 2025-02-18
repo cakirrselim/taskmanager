@@ -1,8 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
-import com.selim.taskmanager.rest.model.RoleAddRequestModel;
-import com.selim.taskmanager.rest.model.RoleAddResponseModel;
-import com.selim.taskmanager.rest.model.UsersAddResponseModel;
+import com.selim.taskmanager.rest.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +16,10 @@ public interface RoleController {
     ResponseEntity<String> deleteRole(@PathVariable UUID id);
 
     @PostMapping("/updateRole") // -
-    ResponseEntity<String> updateRole(@RequestBody RoleAddRequestModel roleAddRequestModel);
+    ResponseEntity<String> updateRole(@RequestBody RoleUpdateRequestModel roleUpdateRequestModel);
 
     @GetMapping("/show")  // OK
-    ResponseEntity<List<RoleAddResponseModel>> showRole();
+    ResponseEntity<List<RoleShowResponseModel>> showRole();
 
     @GetMapping("/showByName/{name}") // OK
     ResponseEntity<RoleAddResponseModel> getRoleByName(@PathVariable String name);
