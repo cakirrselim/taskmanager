@@ -26,7 +26,7 @@ public class RoleServiceImpl implements RoleService {
         Role savedRole = roleDao.addRole(role);
 
         RoleAddResponseModel roleAddResponseModel = new RoleAddResponseModel(
-                savedRole.getId(), savedRole.getName(), savedRole.getDescription());
+                savedRole.getName(), savedRole.getDescription());
         return roleAddResponseModel;
     }
 
@@ -53,7 +53,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleAddResponseModel getRoleByName(String roleName) {
         Role role = roleDao.getRoleByName(roleName);
-        RoleAddResponseModel roleAddResponseModel = new RoleAddResponseModel(role.getId(), role.getName(), role.getDescription());
+        RoleAddResponseModel roleAddResponseModel = new RoleAddResponseModel(role.getName(), role.getDescription());
         return roleAddResponseModel;
     }
 
@@ -61,7 +61,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleAddResponseModel getRoleById(UUID id) {
         Role role = roleDao.getRoleById(id);
         RoleAddResponseModel roleAddResponseModel = new RoleAddResponseModel(
-                id, roleDao.getRoleById(id).getName(), roleDao.getRoleById(id).getDescription());
+                roleDao.getRoleById(id).getName(), roleDao.getRoleById(id).getDescription());
         return roleAddResponseModel;
     }
 }
