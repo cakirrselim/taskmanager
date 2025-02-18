@@ -35,7 +35,7 @@ public class UsersServiceImpl implements UsersService {
         users.setMail(usersAddRequestModel.email());
         Users savedUser = usersDao.addUser(users);
         UsersAddResponseModel usersAddResponseModel = new UsersAddResponseModel(
-                savedUser.getId(), savedUser.getName(), savedUser.getSurname(), savedUser.getUsername(), savedUser.getPassword(), savedUser.getMail() );
+                savedUser.getId(), savedUser.getName(), savedUser.getSurname(), savedUser.getUsername(), savedUser.getPassword(), savedUser.getMail());
 
         return usersAddResponseModel;
     }

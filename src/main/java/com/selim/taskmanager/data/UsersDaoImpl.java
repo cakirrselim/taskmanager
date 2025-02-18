@@ -29,7 +29,7 @@ public class UsersDaoImpl implements UsersDao {
     public Users addUser(Users user) {
         String sql = "insert into users (name, surname, username, password, mail) values (?, ?, ?, ?, ?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(conn->{
+        jdbcTemplate.update(conn -> {
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getName());
             ps.setString(2, user.getSurname());
@@ -37,7 +37,7 @@ public class UsersDaoImpl implements UsersDao {
             ps.setString(4, user.getPassword());
             ps.setString(5, user.getMail());
             return ps;
-        },keyHolder);
+        }, keyHolder);
         user.setId((Integer) keyHolder.getKeys().get("id"));
         return user;
     }
@@ -45,7 +45,7 @@ public class UsersDaoImpl implements UsersDao {
     @Override
     public void updateUser(Users user) {
         String sql = "update users set name = ?, surname = ?, username = ?, password = ?, mail = ?  where id = ?";
-        jdbcTemplate.   update(sql,
+        jdbcTemplate.update(sql,
                 user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getMail(), user.getId());
     }
 
