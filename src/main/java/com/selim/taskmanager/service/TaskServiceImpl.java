@@ -2,8 +2,7 @@ package com.selim.taskmanager.service;
 
 
 import com.selim.taskmanager.data.TaskDao;
-import com.selim.taskmanager.data.TaskDaoImpl;
-import com.selim.taskmanager.entitiy.Task;
+import com.selim.taskmanager.entity.Task;
 import com.selim.taskmanager.rest.model.TaskAddRequestModel;
 import com.selim.taskmanager.rest.model.TaskAddResponseModel;
 

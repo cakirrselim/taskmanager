@@ -1,5 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
+import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,20 @@ public interface RoleController {
     ResponseEntity<String> updateRole(@RequestBody RoleUpdateRequestModel roleUpdateRequestModel);
 
     @GetMapping("/show")  // OK
-    ResponseEntity<List<RoleShowResponseModel>> showRole();
+    ResponseEntity<List<RoleShowResponseModel2>> showRole();
 
     @GetMapping("/showByName/{name}") // OK
     ResponseEntity<RoleAddResponseModel> getRoleByName(@PathVariable String name);
 
     @GetMapping("/showById/{id}") // OK
     ResponseEntity<RoleAddResponseModel> getRoleById(@PathVariable UUID id);
+
+
+
+    @PostMapping("/{roleId}/assignUser/{userId}")
+    ResponseEntity<String> assignUserToRole(@PathVariable int userId, @PathVariable UUID roleId);
+
+    @GetMapping("/{roleId}/users")
+    ResponseEntity<List<Users>> getUsersByRoleId(@PathVariable UUID roleId);
 
 }

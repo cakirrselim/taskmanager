@@ -1,6 +1,6 @@
 package com.selim.taskmanager.data;
 
-import com.selim.taskmanager.entitiy.Task;
+import com.selim.taskmanager.entity.Task;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

@@ -1,6 +1,19 @@
 package com.selim.taskmanager.rest.model;
 
-import java.util.UUID;
+public class RoleShowResponseModel {
+    private String name;
+    private String description;
 
-public record RoleShowResponseModel(UUID id, String name, String description) {
+    public RoleShowResponseModel(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

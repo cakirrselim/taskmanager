@@ -1,7 +1,7 @@
 package com.selim.taskmanager.data;
 
 
-import com.selim.taskmanager.entitiy.Task;
+import com.selim.taskmanager.entity.Task;
 
 import java.util.List;
 

@@ -1,15 +1,15 @@
-package com.selim.taskmanager.entitiy;
+package com.selim.taskmanager.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Role {
+
     @Id
     @GeneratedValue(generator = "uuid-generator", strategy = GenerationType.UUID)
-    // @Column(name = "id", unique = true, nullable = false, updatable = false)
     private UUID id;
 
     @Column(name = "name")
@@ -18,8 +18,13 @@ public class Role {
     @Column(name = "description")
     private String description;
 
+
     public Role() {
     }
+
+    public Role(UUID id, String name, String description) {
+    }
+
 
     public UUID getId() {
         return id;

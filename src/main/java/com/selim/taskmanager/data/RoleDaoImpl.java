@@ -1,6 +1,10 @@
 package com.selim.taskmanager.data;
 
-import com.selim.taskmanager.entitiy.Role;
+import com.selim.taskmanager.entity.Role;
+import com.selim.taskmanager.entity.Users;
+import com.selim.taskmanager.rest.model.UsersShowResponseModel;
+import com.selim.taskmanager.service.RoleService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,9 +18,11 @@ import java.util.UUID;
 public class RoleDaoImpl implements RoleDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final RoleService roleService;
 
-    public RoleDaoImpl(JdbcTemplate jdbcTemplate) {
+    public RoleDaoImpl(JdbcTemplate jdbcTemplate, RoleService roleService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.roleService = roleService;
     }
 
 
@@ -67,5 +73,17 @@ public class RoleDaoImpl implements RoleDao {
         String sql = "SELECT * FROM role WHERE id = ?";
         Role role = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Role.class), id);
         return role;
+    }
+
+    @Override
+    public void assignUserToRole(int userId, UUID roleId) {
+        String sql = "INSERT INTO users_role (users_id, role_id) VALUES (?, ?)";
+        jdbcTemplate.update(sql, userId, roleId);
+    }
+
+    @Override
+    public List<Users> getUsersByRoleId(UUID roleId) {
+        String sql = "SELECT u.* FROM users u JOIN users_role ur ON u.id = ur.users_id WHERE ur.role_id = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Users.class), roleId);
     }
 }

@@ -1,6 +1,7 @@
 package com.selim.taskmanager.data;
 
-import com.selim.taskmanager.entitiy.Users;
+import com.selim.taskmanager.entity.Role;
+import com.selim.taskmanager.entity.Users;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class UsersDaoImpl implements UsersDao {
@@ -68,5 +70,23 @@ public class UsersDaoImpl implements UsersDao {
         String sql = "select * from users where mail = ?";
         Users user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Users.class), email);
         return user;
+    }
+
+    @Override
+    public List<Role> getRolesByUserId(int userId) {
+        String sql = "SELECT r.id, r.name, r.description FROM role r " +
+                "JOIN users_role ur ON r.id = ur.role_id " +
+                "WHERE ur.users_id = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Role(
+                UUID.fromString(rs.getString("id")),
+                rs.getString("name"),
+                rs.getString("description")
+        ), userId);
+    }
+
+    @Override
+    public List<Users> getUsersByRoleId(UUID roleId) {
+        String sql = "SELECT u.* FROM users u JOIN users_role ur ON u.id = ur.users_id WHERE ur.role_id = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Users.class), roleId);
     }
 }

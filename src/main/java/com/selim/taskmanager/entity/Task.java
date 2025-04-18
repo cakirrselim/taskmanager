@@ -1,9 +1,8 @@
-package com.selim.taskmanager.entitiy;
-
-
+package com.selim.taskmanager.entity;
 import jakarta.persistence.*;
 
 
+@Entity
 public class Task {
     @Id
     @Column(name = "id")

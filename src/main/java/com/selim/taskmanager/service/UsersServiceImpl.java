@@ -1,28 +1,37 @@
 package com.selim.taskmanager.service;
 
+import com.selim.taskmanager.data.RoleDao;
 import com.selim.taskmanager.data.UsersDao;
-import com.selim.taskmanager.entitiy.Users;
+import com.selim.taskmanager.entity.Role;
+import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
+import com.selim.taskmanager.rest.model.UsersShowResponseModel;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsersServiceImpl implements UsersService {
 
     private final UsersDao usersDao;
+    private final RoleDao roleDao;
 
-    public UsersServiceImpl(UsersDao usersDao) {
+    public UsersServiceImpl(UsersDao usersDao, RoleDao roleDao) {
         this.usersDao = usersDao;
+        this.roleDao = roleDao;
+    }
+
+    @Override
+    public List<Users> getUsersByRoleId(UUID roleId) {
+        return usersDao.getUsersByRoleId(roleId);
     }
 
 
     @Override
-    public List<UsersAddResponseModel> getAllUsers() {
+    public List<UsersShowResponseModel> getAllUsers() {
         List<Users> users = usersDao.getAllUsers();
-        return users.stream().map(u -> new UsersAddResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail())).toList();
+        return users.stream().map(u -> new UsersShowResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail(), u.getRoles())).toList();
     }
 
     @Override
@@ -72,5 +81,10 @@ public class UsersServiceImpl implements UsersService {
         UsersAddResponseModel usersAddResponseModel = new UsersAddResponseModel(
                 user.getId(), user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getMail());
         return usersAddResponseModel;
+    }
+
+    @Override
+    public List<Role> getRolesByUserId(int userId) {
+        return usersDao.getRolesByUserId(userId);
     }
 }
