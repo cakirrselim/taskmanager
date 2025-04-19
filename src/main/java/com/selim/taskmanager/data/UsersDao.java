@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UsersDao {
-    List<Users> getAllUsers();
     Users addUser(Users user);
     void updateUser(Users user);
     void deleteUser(int id);
     Users findByUsername(String username);
     Users findByEmail(String email);
+
+    List<Users> getAllUsers();
     List<Role> getRolesByUserId(int userId);
-
-
     List<Users> getUsersByRoleId(UUID roleId);
 
 

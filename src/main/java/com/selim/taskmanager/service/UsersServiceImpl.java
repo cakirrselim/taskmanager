@@ -2,6 +2,7 @@ package com.selim.taskmanager.service;
 
 import com.selim.taskmanager.data.RoleDao;
 import com.selim.taskmanager.data.UsersDao;
+import com.selim.taskmanager.data.UsersRolesDao;
 import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
@@ -16,10 +17,12 @@ public class UsersServiceImpl implements UsersService {
 
     private final UsersDao usersDao;
     private final RoleDao roleDao;
+    private final UsersRolesDao usersRolesDao;
 
-    public UsersServiceImpl(UsersDao usersDao, RoleDao roleDao) {
+    public UsersServiceImpl(UsersDao usersDao, RoleDao roleDao, UsersRolesDao usersRolesDao) {
         this.usersDao = usersDao;
         this.roleDao = roleDao;
+        this.usersRolesDao = usersRolesDao;
     }
 
     @Override
@@ -27,10 +30,14 @@ public class UsersServiceImpl implements UsersService {
         return usersDao.getUsersByRoleId(roleId);
     }
 
-
+// EZİYET CODING
     @Override
     public List<UsersShowResponseModel> getAllUsers() {
         List<Users> users = usersDao.getAllUsers();
+        for (Users user : users) {
+            List<Role> roles = usersRolesDao.getRolesByUserId(user.getId());
+            user.setRoles(roles);
+        }
         return users.stream().map(u -> new UsersShowResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail(), u.getRoles())).toList();
     }
 

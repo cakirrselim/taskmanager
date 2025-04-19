@@ -25,14 +25,6 @@ public class UsersRolesDaoImpl implements UsersRolesDao {
     public void assignRoleToUser(int userId, UUID roleId) {
         String sql = "INSERT INTO users_role (users_id, role_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, userId, roleId);
-
-        String nameSql = "SELECT name FROM role WHERE id = ?";
-        String roleName = jdbcTemplate.queryForObject(nameSql, String.class, roleId);
-
-        String updateSql = "UPDATE users SET roles = ? WHERE id = ?";
-        jdbcTemplate.update(updateSql, roleName, userId);
-
-
     }
 
     @Override
@@ -51,7 +43,6 @@ public class UsersRolesDaoImpl implements UsersRolesDao {
             role.setDescription(rs.getString("description"));
             return role;
         };
-
         return jdbcTemplate.query(sql, mapper, userId);
     }
 }

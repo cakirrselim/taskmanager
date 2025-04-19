@@ -4,6 +4,7 @@ import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -86,7 +87,58 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public List<Users> getUsersByRoleId(UUID roleId) {
-        String sql = "SELECT u.* FROM users u JOIN users_role ur ON u.id = ur.users_id WHERE ur.role_id = ?";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Users.class), roleId);
+        String sql = """
+            SELECT u.id, u.name, u.surname, u.username, u.password, u.mail
+            FROM users u
+            JOIN users_role ur ON u.id = ur.users_id
+            WHERE ur.role_id = ?
+            """;
+
+        RowMapper<Users> mapper = (rs, rowNum) -> {
+            Users user = new Users();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("name"));
+            user.setSurname(rs.getString("surname"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setMail(rs.getString("mail"));
+            return user;
+        };
+
+        return jdbcTemplate.query(sql, mapper, roleId);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

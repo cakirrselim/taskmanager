@@ -2,6 +2,7 @@ package com.selim.taskmanager.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,9 @@ public class Role {
 
     @Column(name = "description")
     private String description;
+
+
+    private List<Users> users;
 
 
     public Role() {
@@ -43,5 +47,13 @@ public class Role {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
     }
 }

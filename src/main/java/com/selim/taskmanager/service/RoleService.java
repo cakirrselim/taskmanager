@@ -11,9 +11,9 @@ public interface RoleService {
     RoleAddResponseModel addRole(RoleAddRequestModel roleAddRequestModel);
     void deleteRole(UUID roleId);
     void updateRole(RoleUpdateRequestModel roleUpdateRequestModel);
-    List<RoleShowResponseModel2> getAllRoles();
     RoleAddResponseModel getRoleByName(String roleName);
     RoleAddResponseModel getRoleById(UUID id);
+    List<RoleShowResponseModel2> getAllRoles();
 
     void assignUserToRole(int userId, UUID roleId);
     List<Users> getUsersByRoleId(UUID roleId);

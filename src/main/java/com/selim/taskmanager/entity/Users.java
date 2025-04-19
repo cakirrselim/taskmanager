@@ -3,17 +3,18 @@ package com.selim.taskmanager.entity;
 import java.util.List;
 
 public class Users {
+
     private Integer id;
     private String name;
     private String surname;
     private String username;
     private String password;
     private String mail;
-
     private List<Role> roles;
 
-    // users id ile users_role e gidip o id e ait role_id leri al
-    // o role_id ler ile role tablosuna gidip o id deki name leri alıp users taki roles e setle
+    // users id ler ile users_role'e select atıp role id leri alcaz
+    // role id ile role e select atıp role u alcaz
+    // users daki roles e setlicez
 
     public Users() {}
 
@@ -72,12 +73,6 @@ public class Users {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
-
-
-
-
-
-
 
 
 }

@@ -59,7 +59,7 @@ public class UsersControllerImpl implements UsersController {
     public ResponseEntity<List<Role>> getUserRoles(int userId) {
         List<Role> roles = usersService.getRolesByUserId(userId);
         if (roles.isEmpty()) {
-            return ResponseEntity.noContent().build(); // Eğer rol yoksa 204 döner
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(roles);
     }

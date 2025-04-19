@@ -1,6 +1,7 @@
 package com.selim.taskmanager.service;
 
 import com.selim.taskmanager.data.RoleDao;
+import com.selim.taskmanager.data.UsersDao;
 import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.*;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class RoleServiceImpl implements RoleService {
     private RoleDao roleDao;
+    private UsersDao usersDao;
 
-    public RoleServiceImpl(@Lazy RoleDao roleDao) {
+    public RoleServiceImpl(@Lazy RoleDao roleDao, UsersDao usersDao) {
         this.roleDao = roleDao;
+        this.usersDao = usersDao;
     }
 
     @Override
@@ -47,9 +50,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleShowResponseModel2> getAllRoles() {
-        Role role = new Role();
         List<Role> roles = roleDao.getAllRoles();
-        return roles.stream().map(u -> new RoleShowResponseModel2(u.getId(), u.getName(), u.getDescription())).collect(Collectors.toList());
+        for (Role role : roles) {
+            List<Users> users = usersDao.getUsersByRoleId(role.getId());
+            role.setUsers(users);
+        }
+        return roles.stream().map(u -> new RoleShowResponseModel2(u.getId(), u.getName(), u.getDescription(), u.getUsers())).collect(Collectors.toList());
     }
 
 
