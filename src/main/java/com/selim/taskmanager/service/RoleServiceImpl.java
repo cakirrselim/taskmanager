@@ -74,12 +74,9 @@ public class RoleServiceImpl implements RoleService {
         return roleAddResponseModel;
     }
 
+
     @Override
-    public void assignUserToRole(int userId, UUID roleId) {
-        roleDao.assignUserToRole(userId, roleId);
-    }
-    @Override
-    public List<Users> getUsersByRoleId(UUID roleId) {
-        return roleDao.getUsersByRoleId(roleId);
+    public List<Role> getRolesByUserId(int userId) {
+        return roleDao.getRolesByUserId(userId);
     }
 }

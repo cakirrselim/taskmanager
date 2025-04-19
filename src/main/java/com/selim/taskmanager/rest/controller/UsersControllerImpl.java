@@ -64,10 +64,8 @@ public class UsersControllerImpl implements UsersController {
         return ResponseEntity.ok(roles);
     }
 
-
     @Override
     public ResponseEntity<List<Users>> getUsersByRoleId(UUID roleId) {
         return ResponseEntity.ok(usersService.getUsersByRoleId(roleId));
     }
-
 }

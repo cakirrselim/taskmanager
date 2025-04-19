@@ -1,15 +1,10 @@
 package com.selim.taskmanager.rest.controller;
 
-
 import com.selim.taskmanager.rest.model.RoleShowResponseModel;
-import com.selim.taskmanager.rest.model.UsersRolesAddRequestModel;
-import com.selim.taskmanager.rest.model.UsersRolesAddResponseModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.List;
 import java.util.UUID;
 

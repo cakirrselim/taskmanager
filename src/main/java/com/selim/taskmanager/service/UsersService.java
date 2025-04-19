@@ -17,8 +17,9 @@ public interface UsersService {
     void deleteUser(int id);
     UsersAddResponseModel findByUsername(String username);
     UsersAddResponseModel findByEmail(String email);
-    List<Role> getRolesByUserId(int userId);
 
+
+    List<Role> getRolesByUserId(int userId);
     List<Users> getUsersByRoleId(UUID roleId);
 
 

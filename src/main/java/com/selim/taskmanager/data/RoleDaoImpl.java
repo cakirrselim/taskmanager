@@ -7,6 +7,7 @@ import com.selim.taskmanager.service.RoleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
@@ -75,15 +76,24 @@ public class RoleDaoImpl implements RoleDao {
         return role;
     }
 
-    @Override
-    public void assignUserToRole(int userId, UUID roleId) {
-        String sql = "INSERT INTO users_role (users_id, role_id) VALUES (?, ?)";
-        jdbcTemplate.update(sql, userId, roleId);
-    }
 
     @Override
-    public List<Users> getUsersByRoleId(UUID roleId) {
-        String sql = "SELECT u.* FROM users u JOIN users_role ur ON u.id = ur.users_id WHERE ur.role_id = ?";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Users.class), roleId);
+    public List<Role> getRolesByUserId(int userId) {
+        String sql = """
+        SELECT r.id, r.name, r.description
+        FROM role r
+        JOIN users_role ur ON r.id = ur.role_id
+        WHERE ur.users_id = ?
+    """;
+        RowMapper<Role> mapper = (rs, rowNum) -> {
+            Role role = new Role();
+            role.setId(UUID.fromString(rs.getString("id")));
+            role.setName(rs.getString("name"));
+            role.setDescription(rs.getString("description"));
+            return role;
+        };
+
+        return jdbcTemplate.query(sql, mapper, userId);
     }
+
 }

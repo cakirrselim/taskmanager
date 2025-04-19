@@ -1,5 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
+import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.*;
 import com.selim.taskmanager.service.RoleService;
@@ -54,13 +55,7 @@ public class RoleControllerImpl implements RoleController {
     }
 
     @Override
-    public ResponseEntity<String> assignUserToRole(int userId, UUID roleId) {
-        roleService.assignUserToRole(userId, roleId);
-        return ResponseEntity.ok("Role with id \" + roleId + \" has been assigned");
-    }
-
-    @Override
-    public ResponseEntity<List<Users>> getUsersByRoleId(UUID roleId) {
-        return ResponseEntity.ok(roleService.getUsersByRoleId(roleId));
+    public ResponseEntity<List<Role>> getRolesByUserId(int userId) {
+        return ResponseEntity.ok(roleService.getRolesByUserId(userId));
     }
 }

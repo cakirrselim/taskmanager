@@ -1,5 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
+import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.*;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,7 @@ public interface RoleController {
     @GetMapping("/showById/{id}") // OK
     ResponseEntity<RoleAddResponseModel> getRoleById(@PathVariable UUID id);
 
-
-
-    @PostMapping("/{roleId}/assignUser/{userId}")
-    ResponseEntity<String> assignUserToRole(@PathVariable int userId, @PathVariable UUID roleId);
-
-    @GetMapping("/{roleId}/users")
-    ResponseEntity<List<Users>> getUsersByRoleId(@PathVariable UUID roleId);
+    @GetMapping("/{userId}/roles")
+    ResponseEntity<List<Role>> getRolesByUserId(@PathVariable int userId);  // BURADAYIZ
 
 }

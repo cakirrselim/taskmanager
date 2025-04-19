@@ -14,12 +14,12 @@ public interface UsersDao {
     Users findByEmail(String email);
 
     List<Users> getAllUsers();
-    List<Role> getRolesByUserId(int userId);
     List<Users> getUsersByRoleId(UUID roleId);
 
 
 
-
+    // it shouldn't be here
+    List<Role> getRolesByUserId(int userId);
 
 
 
