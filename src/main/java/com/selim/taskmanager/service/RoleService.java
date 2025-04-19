@@ -16,7 +16,7 @@ public interface RoleService {
     RoleAddResponseModel getRoleById(UUID id);
     List<RoleShowResponseModel2> getAllRoles();
 
-    List<Role> getRolesByUserId(int userId);
+    List<GetRolesByUserIdModel> getRolesByUserId(int userId);
 
 
 

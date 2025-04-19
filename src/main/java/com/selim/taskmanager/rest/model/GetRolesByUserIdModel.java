@@ -1,4 +1,6 @@
 package com.selim.taskmanager.rest.model;
 
-public record GetRolesByUserIdModel() {
+import java.util.UUID;
+
+public record GetRolesByUserIdModel(UUID id, String name, String description) {
 }

@@ -1,13 +1,11 @@
 package com.selim.taskmanager.data;
 
-import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
-
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -74,18 +72,6 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
-    public List<Role> getRolesByUserId(int userId) {
-        String sql = "SELECT r.id, r.name, r.description FROM role r " +
-                "JOIN users_role ur ON r.id = ur.role_id " +
-                "WHERE ur.users_id = ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Role(
-                UUID.fromString(rs.getString("id")),
-                rs.getString("name"),
-                rs.getString("description")
-        ), userId);
-    }
-
-    @Override
     public List<Users> getUsersByRoleId(UUID roleId) {
         String sql = """
             SELECT u.id, u.name, u.surname, u.username, u.password, u.mail
@@ -107,38 +93,4 @@ public class UsersDaoImpl implements UsersDao {
 
         return jdbcTemplate.query(sql, mapper, roleId);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

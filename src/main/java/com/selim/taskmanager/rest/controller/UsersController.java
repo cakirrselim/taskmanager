@@ -1,7 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
-import com.selim.taskmanager.entity.Role;
-import com.selim.taskmanager.entity.Users;
+import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
 import com.selim.taskmanager.rest.model.UsersShowResponseModel;
@@ -29,15 +28,8 @@ public interface UsersController {
     @GetMapping("/showEmail/{email}")
     ResponseEntity<UsersAddResponseModel> findByEmail(@PathVariable String email);
 
-    @GetMapping("/{userId}/roles")
-    ResponseEntity<List<Role>> getUserRoles(@PathVariable int userId);
-
-
-
-
-
     @GetMapping("/{roleId}/users")
-    ResponseEntity<List<Users>> getUsersByRoleId(@PathVariable UUID roleId);  // ÇALIŞIYOR
+    ResponseEntity<List<GetUsersByUserIdModel>> getUsersByRoleId(@PathVariable UUID roleId);
 
 
 

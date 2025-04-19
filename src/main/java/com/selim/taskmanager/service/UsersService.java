@@ -1,7 +1,6 @@
 package com.selim.taskmanager.service;
 
-import com.selim.taskmanager.entity.Role;
-import com.selim.taskmanager.entity.Users;
+import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
 import com.selim.taskmanager.rest.model.UsersShowResponseModel;
@@ -17,10 +16,7 @@ public interface UsersService {
     void deleteUser(int id);
     UsersAddResponseModel findByUsername(String username);
     UsersAddResponseModel findByEmail(String email);
-
-
-    List<Role> getRolesByUserId(int userId);
-    List<Users> getUsersByRoleId(UUID roleId);
+    List<GetUsersByUserIdModel> getUsersByRoleId(UUID roleId);  // BURDAYIZ
 
 
 

@@ -5,12 +5,14 @@ import com.selim.taskmanager.data.UsersDao;
 import com.selim.taskmanager.data.UsersRolesDao;
 import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
+import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
 import com.selim.taskmanager.rest.model.UsersShowResponseModel;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -25,12 +27,15 @@ public class UsersServiceImpl implements UsersService {
         this.usersRolesDao = usersRolesDao;
     }
 
+    // TİP DÖNÜŞÜMÜ
     @Override
-    public List<Users> getUsersByRoleId(UUID roleId) {
-        return usersDao.getUsersByRoleId(roleId);
+    public List<GetUsersByUserIdModel> getUsersByRoleId(UUID roleId) {
+        return usersDao.getUsersByRoleId(roleId).stream().map(users -> new GetUsersByUserIdModel(
+                users.getId(), users.getName(), users.getSurname(), users.getUsername(), users.getPassword(), users.getMail()
+        )).collect(Collectors.toList());
     }
 
-// EZİYET CODING
+    // EZİYET CODING
     @Override
     public List<UsersShowResponseModel> getAllUsers() {
         List<Users> users = usersDao.getAllUsers();
@@ -88,10 +93,5 @@ public class UsersServiceImpl implements UsersService {
         UsersAddResponseModel usersAddResponseModel = new UsersAddResponseModel(
                 user.getId(), user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getMail());
         return usersAddResponseModel;
-    }
-
-    @Override
-    public List<Role> getRolesByUserId(int userId) {
-        return usersDao.getRolesByUserId(userId);
     }
 }

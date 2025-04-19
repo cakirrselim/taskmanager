@@ -1,7 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
-import com.selim.taskmanager.entity.Role;
-import com.selim.taskmanager.entity.Users;
+import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
 import com.selim.taskmanager.rest.model.UsersShowResponseModel;
@@ -56,16 +55,7 @@ public class UsersControllerImpl implements UsersController {
     }
 
     @Override
-    public ResponseEntity<List<Role>> getUserRoles(int userId) {
-        List<Role> roles = usersService.getRolesByUserId(userId);
-        if (roles.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(roles);
-    }
-
-    @Override
-    public ResponseEntity<List<Users>> getUsersByRoleId(UUID roleId) {
+    public ResponseEntity<List<GetUsersByUserIdModel>> getUsersByRoleId(UUID roleId) {
         return ResponseEntity.ok(usersService.getUsersByRoleId(roleId));
     }
 }
