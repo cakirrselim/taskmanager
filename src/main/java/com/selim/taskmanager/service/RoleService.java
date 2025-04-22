@@ -1,10 +1,6 @@
 package com.selim.taskmanager.service;
 
-import com.selim.taskmanager.entity.Role;
-import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.*;
-import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -17,8 +13,5 @@ public interface RoleService {
     List<RoleShowResponseModel2> getAllRoles();
 
     List<GetRolesByUserIdModel> getRolesByUserId(int userId);
-
-
-
 
 }

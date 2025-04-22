@@ -1,8 +1,8 @@
 package com.selim.taskmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +19,10 @@ public class Role {
     @Column(name = "description")
     private String description;
 
-
+    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    // THIS ANNOTATION PROVIDES THAT IF rules = null, IT WON'T PRINT. I ASKED CHAT AND THIS IS WHAT CHAT GAVE ME.
+    // I COULDN'T FIND THE SOLUTION WITH MODELS :D
     private List<Users> users;
 
 

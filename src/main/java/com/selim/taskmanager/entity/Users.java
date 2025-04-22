@@ -1,5 +1,7 @@
 package com.selim.taskmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
 public class Users {
@@ -10,11 +12,10 @@ public class Users {
     private String username;
     private String password;
     private String mail;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    // THIS ANNOTATION PROVIDES THAT IF rules = null, IT WON'T PRINT. I ASKED CHAT AND THIS IS WHAT CHAT GAVE ME.
+    // I COULDN'T FIND THE SOLUTION WITH MODELS :D
     private List<Role> roles;
-
-    // users id ler ile users_role'e select atıp role id leri alcaz
-    // role id ile role e select atıp role u alcaz
-    // users daki roles e setlicez
 
     public Users() {}
 

@@ -9,22 +9,22 @@ import java.util.UUID;
 
 public interface RoleController {
 
-    @PostMapping("/add")  //
+    @PostMapping("/add")
     ResponseEntity<RoleAddResponseModel> addRole(@RequestBody RoleAddRequestModel roleAddRequestModel);
 
-    @DeleteMapping("/deleteRole/{id}")  // OK
+    @DeleteMapping("/deleteRole/{id}")
     ResponseEntity<String> deleteRole(@PathVariable UUID id);
 
-    @PostMapping("/updateRole") // -
+    @PostMapping("/updateRole")
     ResponseEntity<String> updateRole(@RequestBody RoleUpdateRequestModel roleUpdateRequestModel);
 
-    @GetMapping("/show")  // OK
+    @GetMapping("/show")
     ResponseEntity<List<RoleShowResponseModel2>> showRole();
 
-    @GetMapping("/showByName/{name}") // OK
+    @GetMapping("/showByName/{name}")
     ResponseEntity<RoleAddResponseModel> getRoleByName(@PathVariable String name);
 
-    @GetMapping("/showById/{id}") // OK
+    @GetMapping("/showById/{id}")
     ResponseEntity<RoleAddResponseModel> getRoleById(@PathVariable UUID id);
 
     @GetMapping("/{userId}/roles")

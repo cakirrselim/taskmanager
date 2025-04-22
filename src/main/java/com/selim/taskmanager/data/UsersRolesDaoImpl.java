@@ -45,4 +45,13 @@ public class UsersRolesDaoImpl implements UsersRolesDao {
         };
         return jdbcTemplate.query(sql, mapper, userId);
     }
+
+    @Override
+    public void deleteUserFromRole(int userId, UUID roleId) {
+    }
+
+    @Override
+    public void deleteRoleFromUser(int userId, UUID roleId) {
+
+    }
 }

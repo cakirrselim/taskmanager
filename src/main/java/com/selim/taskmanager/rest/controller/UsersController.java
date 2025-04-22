@@ -31,6 +31,4 @@ public interface UsersController {
     @GetMapping("/{roleId}/users")
     ResponseEntity<List<GetUsersByUserIdModel>> getUsersByRoleId(@PathVariable UUID roleId);
 
-
-
 }
