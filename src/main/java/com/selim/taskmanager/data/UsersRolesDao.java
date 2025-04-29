@@ -8,5 +8,5 @@ public interface UsersRolesDao {
 
     void assignRoleToUser(int userId, UUID roleId);
     List<Role> getRolesByUserId(int userId);
-
+    void deleteUserFromRole(int userId, UUID roleId);
 }

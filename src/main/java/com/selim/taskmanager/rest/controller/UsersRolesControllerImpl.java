@@ -28,4 +28,10 @@ public class UsersRolesControllerImpl implements UsersRolesController {
     public List<RoleShowResponseModel> getRolesByUserId(int userId) {
         return usersRolesService.getRolesByUserId(userId);
     }
+
+    @Override
+    public ResponseEntity<String> deleteUserFromRole(int userId, UUID roleId) {
+        usersRolesService.deleteUserFromRole(userId, roleId);
+        return ResponseEntity.ok("Role deleted");
+    }
 }

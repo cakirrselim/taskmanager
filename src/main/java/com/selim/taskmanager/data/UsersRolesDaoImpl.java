@@ -1,15 +1,11 @@
 package com.selim.taskmanager.data;
 
-
 import com.selim.taskmanager.entity.Role;
-import com.selim.taskmanager.entity.UsersRoles;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 @Repository
@@ -48,10 +44,7 @@ public class UsersRolesDaoImpl implements UsersRolesDao {
 
     @Override
     public void deleteUserFromRole(int userId, UUID roleId) {
-    }
-
-    @Override
-    public void deleteRoleFromUser(int userId, UUID roleId) {
-
+        String sql = "DELETE FROM users_role WHERE users_id = ? AND role_id = ?";
+        jdbcTemplate.update(sql, userId, roleId);
     }
 }

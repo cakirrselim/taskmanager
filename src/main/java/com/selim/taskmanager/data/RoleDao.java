@@ -13,5 +13,4 @@ public interface RoleDao {
 
     List<Role> getAllRoles();
     List<Role> getRolesByUserId(int userId);
-
 }

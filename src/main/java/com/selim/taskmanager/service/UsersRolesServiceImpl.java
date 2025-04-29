@@ -23,6 +23,11 @@ public class UsersRolesServiceImpl implements UsersRolesService {
     }
 
     @Override
+    public void deleteUserFromRole(int userId, UUID roleId) {
+        usersRolesDao.deleteUserFromRole(userId, roleId);
+    }
+
+    @Override
     public List<RoleShowResponseModel> getRolesByUserId(int userId) {
         List<Role> roles = usersRolesDao.getRolesByUserId(userId);
         return roles.stream()
