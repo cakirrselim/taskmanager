@@ -1,15 +1,22 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
-function Home() {
+function Home({ username, setUsername }) {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        setUsername(null);
+        navigate("/login");
+    };
+
     return (
         <div className="home-container">
-            <h1>👋 Hoş Geldiniz!</h1>
-            <div className="home-buttons">
-                <Link to="/roles" className="home-btn">🎯 Roller</Link>
-                <Link to="/users" className="home-btn">👤 Kullanıcılar</Link>
-                <Link to="/tasks" className="home-btn">📝 Görevler</Link>
-            </div>
+            <header className="home-header">
+                <h2>👋 Hoşgeldiniz, {username}!</h2>
+                <button className="home-btn logout-btn" onClick={handleLogout}>
+                    🚪 Çıkış Yap
+                </button>
+            </header>
         </div>
     );
 }
