@@ -1,10 +1,8 @@
 package com.selim.taskmanager.rest.controller;
 
-
 import com.selim.taskmanager.rest.model.TaskAddRequestModel;
 import com.selim.taskmanager.rest.model.TaskAddResponseModel;
 import com.selim.taskmanager.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -16,7 +14,6 @@ public class TaskControllerImpl implements TaskController {
 
     private final TaskService taskService;
 
-    @Autowired
     public TaskControllerImpl(TaskService taskService) {
         this.taskService = taskService;
     }
