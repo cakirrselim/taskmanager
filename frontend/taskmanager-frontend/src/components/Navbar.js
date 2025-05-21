@@ -5,8 +5,8 @@ function Navbar({ username, setUsername }) {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        setUsername(null);  // Kullanıcı bilgisini temizle
-        navigate("/login"); // Login sayfasına yönlendir
+        setUsername(null);
+        navigate("/login");
     };
 
     return (
@@ -23,12 +23,12 @@ function Navbar({ username, setUsername }) {
             >
                 🎯 Roller
             </NavLink>
-            <NavLink
-                to="/users"
-                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-            >
-                👤 Kullanıcılar
-            </NavLink>
+            {/*<NavLink*/}
+            {/*    to="/users"*/}
+            {/*    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}*/}
+            {/*>*/}
+            {/*    👤 Kullanıcılar*/}
+            {/*</NavLink>*/}
             <NavLink
                 to="/tasks"
                 className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}

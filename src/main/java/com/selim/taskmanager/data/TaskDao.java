@@ -1,6 +1,7 @@
 package com.selim.taskmanager.data;
 
 
+import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Task;
 
 import java.util.List;
@@ -11,6 +12,6 @@ public interface TaskDao {
     Task saveTask(Task task);
     void deleteTask(int id);
     void updateTask(Task task);
-    Task getTaskById(int id);
+    List<Task> getTaskByUserId(int id);
 
 }

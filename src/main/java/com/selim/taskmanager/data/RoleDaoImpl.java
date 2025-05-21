@@ -65,9 +65,32 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public Role getRoleByName(String roleName) {
         String sql = "SELECT * FROM role WHERE name = ?";
-        Role role = (Role) jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Role.class), roleName);
+        Role role = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Role.class), roleName);
         return role;
     }
+
+    @Override
+    public List<Role> getRolesByUsername(String username) {
+        String sql = """
+        SELECT r.id, r.name, r.description
+        FROM role r
+        JOIN users_role ur ON r.id = ur.role_id
+        JOIN users u ON ur.users_id = u.id
+        WHERE u.username = ?
+    """;
+
+        RowMapper<Role> mapper = (rs, rowNum) -> {
+            Role role = new Role();
+            role.setId(UUID.fromString(rs.getString("id")));
+            role.setName(rs.getString("name"));
+            role.setDescription(rs.getString("description"));
+            return role;
+        };
+
+        return jdbcTemplate.query(sql, mapper, username);
+    }
+
+
 
     @Override
     public Role getRoleById(UUID id) {

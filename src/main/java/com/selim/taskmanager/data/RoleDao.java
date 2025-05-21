@@ -9,6 +9,7 @@ public interface RoleDao {
     void deleteRole(UUID roleId);
     void updateRole(Role role);
     Role getRoleByName(String roleName);
+    List<Role> getRolesByUsername(String userName);
     Role getRoleById(UUID id);
 
     List<Role> getAllRoles();

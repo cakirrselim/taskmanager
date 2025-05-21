@@ -1,0 +1,56 @@
+.role-list-container {
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 600px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.role-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.role-item {
+    margin: 0.6rem 0;
+    padding: 1rem 1.5rem;
+    background-color: #2980b9;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.role-item:hover {
+    background-color: #1f6391;
+}
+
+.role-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 2rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    box-shadow: 0 3px 7px rgba(52, 152, 219, 0.4);
+    cursor: default;
+    user-select: none;
+    margin-bottom: 1.5rem;
+}
+
+.role-message {
+    font-style: italic;
+    color: #666;
+    margin-top: 1rem;
+}
+
+.role-error {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 1rem;
+}

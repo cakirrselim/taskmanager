@@ -2,6 +2,7 @@ package com.selim.taskmanager.service;
 
 import com.selim.taskmanager.rest.model.TaskAddRequestModel;
 import com.selim.taskmanager.rest.model.TaskAddResponseModel;
+import com.selim.taskmanager.rest.model.TaskShowResponseModel;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface TaskService {
     TaskAddResponseModel add(TaskAddRequestModel task);
     void delete(int id);
     void update(TaskAddRequestModel task);
-    TaskAddResponseModel getById(int id);
+    List<TaskShowResponseModel> getTaskByUserId(int userId);
 }

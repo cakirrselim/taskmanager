@@ -12,10 +12,10 @@ public class Users {
     private String username;
     private String password;
     private String mail;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    // THIS ANNOTATION PROVIDES THAT IF rules = null, IT WON'T PRINT. I ASKED CHAT AND THIS IS WHAT CHAT GAVE ME.
-    // I COULDN'T FIND THE SOLUTION WITH MODELS :D
+    @JsonInclude(JsonInclude.Include.NON_NULL) // THIS ANNOTATION PROVIDES THAT IF rules = null, IT WON'T PRINT.
     private List<Role> roles;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<Task> tasks;
 
     public Users() {}
 
@@ -71,8 +71,15 @@ public class Users {
         return roles;
     }
 
+    public List<Task> getTasks() {
+        return this.tasks;
+    }
+
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
 

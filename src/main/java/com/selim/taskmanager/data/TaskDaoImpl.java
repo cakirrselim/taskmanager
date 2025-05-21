@@ -1,14 +1,17 @@
 package com.selim.taskmanager.data;
 
+import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Task;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class TaskDaoImpl implements TaskDao {
@@ -52,9 +55,20 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public Task getTaskById(int id) {
-        String sql = "SELECT * FROM task WHERE id = ?";
-        Task task = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class), id);
-        return task;
+    public List<Task> getTaskByUserId(int userId) {
+        String sql = """
+            SELECT r.id, r.name
+            FROM task r
+            JOIN users_task ur ON r.id = ur.task_id
+            WHERE ur.user_id = ?
+        """;
+
+        RowMapper<Task> mapper = (rs, rowNum) -> {
+            Task task = new Task();
+            task.setId(rs.getInt("id"));
+            task.setName(rs.getString("name"));
+            return task;
+        };
+        return jdbcTemplate.query(sql ,mapper, userId);
     }
 }

@@ -36,7 +36,7 @@ public class RoleControllerImpl implements RoleController {
     }
 
     @Override
-    public ResponseEntity<List<RoleShowResponseModel2>> showRole() {  // YOU'RE HERE!
+    public ResponseEntity<List<RoleShowResponseModel2>> showRole() {
         return ResponseEntity.ok(roleService.getAllRoles());
     }
 
@@ -45,6 +45,12 @@ public class RoleControllerImpl implements RoleController {
         RoleAddResponseModel roleAddResponseModel = roleService.getRoleByName(name);
         return ResponseEntity.ok(roleAddResponseModel);
     }
+
+    @Override
+    public ResponseEntity<List<GetRolesByUserIdModel>> getRolesByUsername(String name) {
+        return ResponseEntity.ok(roleService.getRolesByUsername(name));
+    }
+
 
     @Override
     public ResponseEntity<RoleAddResponseModel> getRoleById(UUID id) {

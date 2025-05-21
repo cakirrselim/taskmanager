@@ -11,6 +11,6 @@ public interface UsersDao {
     Users findByUsername(String username);
     Users findByEmail(String email);
     List<Users> getAllUsers();
-    List<Users> getUsersByRoleId(UUID roleId); // BURDAYIZ
+    List<Users> getUsersByRoleId(UUID roleId);
 
 }

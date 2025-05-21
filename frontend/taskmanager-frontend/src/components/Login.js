@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-function Login({ setUsername }) {
+function Login({ setUsername, setUserId }) {
     const [usernameInput, setUsernameInput] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -18,13 +18,19 @@ function Login({ setUsername }) {
                 password,
             });
 
-            console.log("Giriş başarılı", response.data);
+            const { username, id } = response.data;
 
-            setUsername(response.data.username);  // Kullanıcı adını global state'e gönder
-            setError(""); // Önceki hataları temizle
-            navigate("/"); // Anasayfaya yönlendir
+            if (username && id !== undefined) {
+                setUsername(username);
+                setUserId(id);
+                setError("");
+                navigate("/");
+            } else {
+                setError("Sunucudan geçerli kullanıcı verisi alınamadı.");
+                console.error("Eksik kullanıcı verisi:", response.data);
+            }
         } catch (err) {
-            console.error("Giriş başarısız", err);
+            console.error("Giriş başarısız:", err);
             setError("Kullanıcı adı veya şifre hatalı.");
         }
     };

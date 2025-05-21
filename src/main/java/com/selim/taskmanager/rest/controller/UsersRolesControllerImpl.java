@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/assignRoleToUser")
+@RequestMapping("/roleUserRelation")
 public class UsersRolesControllerImpl implements UsersRolesController {
 
     private final UsersRolesService usersRolesService;

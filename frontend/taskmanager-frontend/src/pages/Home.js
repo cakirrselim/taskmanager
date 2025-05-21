@@ -13,9 +13,6 @@ function Home({ username, setUsername }) {
         <div className="home-container">
             <header className="home-header">
                 <h2>👋 Hoşgeldiniz, {username}!</h2>
-                <button className="home-btn logout-btn" onClick={handleLogout}>
-                    🚪 Çıkış Yap
-                </button>
             </header>
         </div>
     );

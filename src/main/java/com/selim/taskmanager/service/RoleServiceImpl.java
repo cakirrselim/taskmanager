@@ -65,6 +65,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public List<GetRolesByUserIdModel> getRolesByUsername(String username) {
+        return roleDao.getRolesByUsername(username).stream().map(u -> new GetRolesByUserIdModel(
+                u.getId(), u.getName(), u.getDescription())).collect(Collectors.toList());
+    }
+
+
+    @Override
     public RoleAddResponseModel getRoleById(UUID id) {
         Role role = roleDao.getRoleById(id);
         RoleAddResponseModel roleAddResponseModel = new RoleAddResponseModel(

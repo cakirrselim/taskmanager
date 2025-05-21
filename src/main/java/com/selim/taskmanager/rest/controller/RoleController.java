@@ -24,6 +24,9 @@ public interface RoleController {
     @GetMapping("/showByName/{name}")
     ResponseEntity<RoleAddResponseModel> getRoleByName(@PathVariable String name);
 
+    @GetMapping("/showByUserName/{name}")
+    ResponseEntity<List<GetRolesByUserIdModel>> getRolesByUsername(@PathVariable String name);
+
     @GetMapping("/showById/{id}")
     ResponseEntity<RoleAddResponseModel> getRoleById(@PathVariable UUID id);
 

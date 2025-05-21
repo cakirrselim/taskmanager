@@ -1,9 +1,11 @@
 package com.selim.taskmanager.service;
 
 import com.selim.taskmanager.data.RoleDao;
+import com.selim.taskmanager.data.TaskDao;
 import com.selim.taskmanager.data.UsersDao;
 import com.selim.taskmanager.data.UsersRolesDao;
 import com.selim.taskmanager.entity.Role;
+import com.selim.taskmanager.entity.Task;
 import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
@@ -20,11 +22,13 @@ public class UsersServiceImpl implements UsersService {
     private final UsersDao usersDao;
     private final RoleDao roleDao;
     private final UsersRolesDao usersRolesDao;
+    private final TaskDao taskDao;
 
-    public UsersServiceImpl(UsersDao usersDao, RoleDao roleDao, UsersRolesDao usersRolesDao) {
+    public UsersServiceImpl(UsersDao usersDao, RoleDao roleDao, UsersRolesDao usersRolesDao, TaskDao taskDao) {
         this.usersDao = usersDao;
         this.roleDao = roleDao;
         this.usersRolesDao = usersRolesDao;
+        this.taskDao = taskDao;
     }
 
     // TİP DÖNÜŞÜMÜ
@@ -42,8 +46,10 @@ public class UsersServiceImpl implements UsersService {
         for (Users user : users) {
             List<Role> roles = usersRolesDao.getRolesByUserId(user.getId());
             user.setRoles(roles);
+            List<Task> tasks = taskDao.getTaskByUserId(user.getId());
+            user.setTasks(tasks);
         }
-        return users.stream().map(u -> new UsersShowResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail(), u.getRoles())).toList();
+        return users.stream().map(u -> new UsersShowResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail(), u.getRoles(), u.getTasks())).toList();
     }
 
     @Override
