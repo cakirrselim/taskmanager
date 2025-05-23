@@ -2,6 +2,8 @@ package com.selim.taskmanager.service;
 
 import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.rest.model.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 import java.util.UUID;
 

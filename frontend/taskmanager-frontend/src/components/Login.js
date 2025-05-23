@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-function Login({ setUsername, setUserId }) {
+function Login({ setUsername, setUserId, setRoles }) {
     const [usernameInput, setUsernameInput] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -18,11 +18,21 @@ function Login({ setUsername, setUserId }) {
                 password,
             });
 
-            const { username, id } = response.data;
+            const { username, id, roles } = response.data;
+            console.log("Gelen roller:", roles); // <-- Burada kontrol et
+
 
             if (username && id !== undefined) {
                 setUsername(username);
                 setUserId(id);
+
+                if (roles && Array.isArray(roles)) {
+                    setRoles(roles); // ROLLERİ GLOBAL STATE'E GÖNDERİYORUZ
+                } else {
+                    console.warn("Sunucudan rol bilgisi alınamadı.");
+                    setRoles([]);
+                }
+
                 setError("");
                 navigate("/");
             } else {

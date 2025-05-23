@@ -3,11 +3,13 @@ package com.selim.taskmanager.rest.controller;
 import com.selim.taskmanager.rest.model.*;
 import com.selim.taskmanager.service.RoleService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/role")
 public class RoleControllerImpl implements RoleController {

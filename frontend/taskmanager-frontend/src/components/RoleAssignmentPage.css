@@ -1,0 +1,75 @@
+.role-assignment-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.left-panel {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.right-panel {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+.left-panel select, .left-panel button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.right-panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.right-panel li {
+    margin-bottom: 10px;
+}
+.role-assignment-container {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+}
+
+.left-panel, .right-panel {
+    flex: 1; /* Ekranı eşit ikiye böler */
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.left-panel h3, .right-panel h4 {
+    margin-bottom: 15px;
+}
+
+.left-panel select, .left-panel button {
+    display: block;
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+}
+.last-assignment-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e6ffe6;
+    border: 1px solid #b6f2b6;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
