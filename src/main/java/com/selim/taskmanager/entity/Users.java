@@ -1,7 +1,5 @@
 package com.selim.taskmanager.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.List;
 
 public class Users {
@@ -12,9 +10,7 @@ public class Users {
     private String username;
     private String password;
     private String mail;
-    @JsonInclude(JsonInclude.Include.NON_NULL) // THIS ANNOTATION PROVIDES THAT IF rules = null, IT WON'T PRINT.
     private List<Role> roles;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Task> tasks;
 
     public Users() {}

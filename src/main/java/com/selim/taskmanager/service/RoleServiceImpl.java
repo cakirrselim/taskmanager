@@ -5,7 +5,6 @@ import com.selim.taskmanager.data.UsersDao;
 import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.*;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +15,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleDao roleDao;
     private UsersDao usersDao;
 
-    public RoleServiceImpl(@Lazy RoleDao roleDao, UsersDao usersDao) {
+    public RoleServiceImpl(RoleDao roleDao, UsersDao usersDao) {
         this.roleDao = roleDao;
         this.usersDao = usersDao;
     }
@@ -48,13 +47,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RoleShowResponseModel2> getAllRoles() {
+    public List<RoleShowResponseModel> getAllRoles() {
         List<Role> roles = roleDao.getAllRoles();
         for (Role role : roles) {
             List<Users> users = usersDao.getUsersByRoleId(role.getId());
             role.setUsers(users);
         }
-        return roles.stream().map(u -> new RoleShowResponseModel2(u.getId(), u.getName(), u.getDescription(), u.getUsers())).collect(Collectors.toList());
+        return roles.stream().map(u -> new RoleShowResponseModel(u.getId(), u.getName(), u.getDescription(), u.getUsers())).collect(Collectors.toList());
     }
 
     @Override

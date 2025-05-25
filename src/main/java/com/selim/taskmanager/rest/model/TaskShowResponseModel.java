@@ -1,5 +1,8 @@
 package com.selim.taskmanager.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskShowResponseModel {
     private Integer id;
     private String name;

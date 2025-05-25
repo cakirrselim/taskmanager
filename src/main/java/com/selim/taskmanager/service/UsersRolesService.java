@@ -9,5 +9,5 @@ public interface UsersRolesService {
 
     void assignRoleToUser(int userId, UUID roleId);
     void deleteUserFromRole(int userId, UUID roleId);
-    List<RoleShowResponseModel> getRolesByUserId(int userId);
+    List<GetRolesByUserIdModel> getRolesByUserId(int userId);
 }

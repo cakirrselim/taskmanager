@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserTaskController {
 
     @PostMapping("/{userId}/assignTask/{taskId}")
-    ResponseEntity<String> assignTaskToUser(@PathVariable int userId, @PathVariable int taskId);
+    ResponseEntity<String> assignUserToTask(@PathVariable int userId, @PathVariable int taskId);
 
     @GetMapping("/getTasksByUserId/{userId}")
     List<TaskShowResponseModel> getRolesByUserId(@PathVariable int userId);

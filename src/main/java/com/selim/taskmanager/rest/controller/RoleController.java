@@ -19,7 +19,7 @@ public interface RoleController {
     ResponseEntity<String> updateRole(@RequestBody RoleUpdateRequestModel roleUpdateRequestModel);
 
     @GetMapping("/show")
-    ResponseEntity<List<RoleShowResponseModel2>> showRole();
+    ResponseEntity<List<RoleShowResponseModel>> showRole();
 
     @GetMapping("/showByName/{name}")
     ResponseEntity<RoleAddResponseModel> getRoleByName(@PathVariable String name);

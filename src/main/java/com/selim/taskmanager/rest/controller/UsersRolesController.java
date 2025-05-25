@@ -1,6 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
-import com.selim.taskmanager.rest.model.RoleShowResponseModel;
+import com.selim.taskmanager.rest.model.GetRolesByUserIdModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ public interface UsersRolesController {
     ResponseEntity<String> assignRoleToUser(@PathVariable int userId, @PathVariable UUID roleId);
 
     @GetMapping("/getRolesByUserId/{userId}")
-    List<RoleShowResponseModel> getRolesByUserId(@PathVariable int userId);
+    List<GetRolesByUserIdModel> getRolesByUserId(@PathVariable int userId);
 
     @DeleteMapping("/{userId}/deleteRole/{roleId}")
     ResponseEntity<String> deleteUserFromRole(@PathVariable int userId, @PathVariable UUID roleId);

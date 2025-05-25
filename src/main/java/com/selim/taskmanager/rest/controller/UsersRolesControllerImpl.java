@@ -1,6 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
-import com.selim.taskmanager.rest.model.RoleShowResponseModel;
+import com.selim.taskmanager.rest.model.GetRolesByUserIdModel;
 import com.selim.taskmanager.service.UsersRolesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class UsersRolesControllerImpl implements UsersRolesController {
     }
 
     @Override
-    public List<RoleShowResponseModel> getRolesByUserId(int userId) {
+    public List<GetRolesByUserIdModel> getRolesByUserId(int userId) {
         return usersRolesService.getRolesByUserId(userId);
     }
 

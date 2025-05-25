@@ -5,7 +5,6 @@ import com.selim.taskmanager.service.UserTaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -19,8 +18,8 @@ public class UserTaskControllerImpl implements UserTaskController {
     }
 
     @Override
-    public ResponseEntity<String> assignTaskToUser(int userId, int taskId) {
-        userTaskService.assignRoleToUser(userId, taskId);
+    public ResponseEntity<String> assignUserToTask(int userId, int taskId) {
+        userTaskService.assignUserToTask(userId, taskId);
         return ResponseEntity.ok("Assigned task to user");
     }
     @Override

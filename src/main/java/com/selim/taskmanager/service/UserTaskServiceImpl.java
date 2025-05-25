@@ -20,8 +20,8 @@ public class UserTaskServiceImpl implements UserTaskService {
     }
 
     @Override
-    public void assignRoleToUser(int userId, int taskId) {
-        userTaskDao.assignRoleToUser(userId, taskId);
+    public void assignUserToTask(int userId, int taskId) {
+        userTaskDao.assignUserToTask(userId, taskId);
     }
 
     @Override

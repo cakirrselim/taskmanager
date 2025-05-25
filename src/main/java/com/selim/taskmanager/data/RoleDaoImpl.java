@@ -19,11 +19,10 @@ import java.util.UUID;
 public class RoleDaoImpl implements RoleDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final RoleService roleService;
 
-    public RoleDaoImpl(JdbcTemplate jdbcTemplate, RoleService roleService) {
+
+    public RoleDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.roleService = roleService;
     }
 
 

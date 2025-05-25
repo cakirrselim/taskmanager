@@ -13,4 +13,8 @@ public interface UsersDao {
     List<Users> getAllUsers();
     List<Users> getUsersByRoleId(UUID roleId);
 
+    Users authenticateUser(String username, String password);
+
+
+
 }

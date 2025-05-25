@@ -93,4 +93,14 @@ public class UsersDaoImpl implements UsersDao {
 
         return jdbcTemplate.query(sql, mapper, roleId);
     }
+
+    @Override
+    public Users authenticateUser(String username, String password) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+        return jdbcTemplate.queryForObject(
+                sql,
+                new BeanPropertyRowMapper<>(Users.class),
+                username, password
+        );
+    }
 }

@@ -1,19 +1,10 @@
 package com.selim.taskmanager.rest.model;
 
-public class RoleShowResponseModel {
-    private String name;
-    private String description;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-    public RoleShowResponseModel(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+import java.util.List;
+import java.util.UUID;
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record RoleShowResponseModel(UUID id, String name, String description, List users) {
 }

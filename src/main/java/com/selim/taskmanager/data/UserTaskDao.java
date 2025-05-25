@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface UserTaskDao {
 
-    void assignRoleToUser(int userId, int taskId);
+    void assignUserToTask(int userId, int taskId);
     void deleteUserFromTask(int userId, int taskId);
     List<Task> getTasksByUserId(int userId);
 

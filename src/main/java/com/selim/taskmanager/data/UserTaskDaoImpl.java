@@ -19,7 +19,7 @@ public class UserTaskDaoImpl implements UserTaskDao {
 
 
     @Override
-    public void assignRoleToUser(int userId, int taskId) {
+    public void assignUserToTask(int userId, int taskId) {
         String sql = "INSERT INTO users_task (user_id, task_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, userId, taskId);
     }
