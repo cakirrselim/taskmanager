@@ -24,7 +24,7 @@ public class UserTaskControllerImpl implements UserTaskController {
     }
     @Override
     public ResponseEntity<String> deleteUserFromRole(int userId, int taskId) {
-        userTaskService.deleteUserFromTask(taskId, userId);
+        userTaskService.deleteUserFromTask(userId, taskId);
         return ResponseEntity.ok("Deleted user from role");
     }
 

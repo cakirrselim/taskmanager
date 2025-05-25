@@ -2,9 +2,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar({ username, setUsername, roles }) {
-    console.log("Roles in Navbar:", roles);
-
-
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -14,13 +11,6 @@ function Navbar({ username, setUsername, roles }) {
 
     return (
         <div className="nav">
-            <NavLink
-                to="/"
-                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-            >
-                🏠 Ana Sayfa
-            </NavLink>
-
             <NavLink
                 to="/roles"
                 className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
@@ -35,7 +25,6 @@ function Navbar({ username, setUsername, roles }) {
                 📝 Görevler
             </NavLink>
 
-            {/* 👤 Sadece admin rolüne sahip kullanıcılar görür */}
             {roles?.includes("admin") && (
                 <NavLink
                     to="/users"
@@ -50,37 +39,45 @@ function Navbar({ username, setUsername, roles }) {
                     to="/assign-role"
                     className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                 >
-                    🔧 Rol Ata / Kaldır
+                    🔧 Rol Ata/Kaldır
                 </NavLink>
             )}
-            {/* 👤 Sadece admin rolüne sahip kullanıcılar görür */}
+
+            {roles?.includes("admin") && (
+                <NavLink
+                    to="/task-assignment"
+                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                >
+                    📋 Görev Ata/Kaldır
+                </NavLink>
+            )}
+
             {roles?.includes("admin") && (
                 <NavLink
                     to="/task-assign"
                     className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                 >
-                    📝 Görev Oluştur
+                    ✨ Görev Oluştur
                 </NavLink>
             )}
+
             {roles?.includes("admin") && (
                 <NavLink
-                    to="/user-management"  // /task-assign yerine /user-management
+                    to="/user-management"
                     className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                 >
-                    📝 Kullanıcı Ekle / Sil
+                    👥 Kullanıcı Ekle/Sil
                 </NavLink>
             )}
+
             {roles?.includes("admin") && (
                 <NavLink
-                    to="/role-management"  // /task-assign yerine /role-management
+                    to="/role-management"
                     className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
                 >
-                    📝 Role Ekle / Sil
+                    🎭 Rol Ekle/Sil
                 </NavLink>
             )}
-
-
-
 
             {username ? (
                 <div className="nav-logout">

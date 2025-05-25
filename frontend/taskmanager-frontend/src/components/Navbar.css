@@ -56,6 +56,11 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+.navbar {
+    height: 150px; /* Örneğin 60px sabit yükseklik */
+    overflow: hidden; /* İçerik taşarsa gizle */
+}
+
 
 .logout-btn:hover {
     background-color: #16a085;
