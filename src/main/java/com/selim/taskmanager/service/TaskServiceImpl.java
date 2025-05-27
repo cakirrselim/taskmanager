@@ -2,15 +2,16 @@ package com.selim.taskmanager.service;
 
 
 import com.selim.taskmanager.data.TaskDao;
-import com.selim.taskmanager.data.TaskDaoImpl;
-import com.selim.taskmanager.entitiy.Task;
+import com.selim.taskmanager.entity.Task;
 import com.selim.taskmanager.rest.model.TaskAddRequestModel;
 import com.selim.taskmanager.rest.model.TaskAddResponseModel;
 
+import com.selim.taskmanager.rest.model.TaskShowResponseModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -55,14 +56,12 @@ public class TaskServiceImpl implements TaskService {
         taskDao.updateTask(task1);
     }
 
-
     @Override
-    @Transactional
-    public TaskAddResponseModel getById(int id) {
-        taskDao.getTaskById(id);
-        TaskAddResponseModel taskAddResponseModel = new TaskAddResponseModel(id, taskDao.getTaskById(id).getName());
-        return taskAddResponseModel;
+    public List<TaskShowResponseModel> getTaskByUserId(int userId) {
+        return taskDao.getTaskByUserId(userId).stream().map(
+                t -> new TaskShowResponseModel(t.getId(), t.getName())).collect(Collectors.toList());
     }
+
 }
 
 

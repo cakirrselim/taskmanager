@@ -1,0 +1,93 @@
+/* AssignRole.css dosyasına ekleyin/güncelleyin */
+
+.right-panel {
+    flex: 2;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+
+.lists-container {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+}
+
+.users-column, .roles-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.users-list, .roles-list {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.info-card {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+
+.info-card:hover {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.info-card strong {
+    display: block;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.info-card p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.info-card small {
+    color: #888;
+    font-size: 0.8em;
+}
+
+/* Scroll bar stilleri */
+.users-list::-webkit-scrollbar,
+.roles-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.users-list::-webkit-scrollbar-track,
+.roles-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.users-list::-webkit-scrollbar-thumb,
+.roles-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.users-list::-webkit-scrollbar-thumb:hover,
+.roles-list::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Başlık stilleri */
+.users-column h4,
+.roles-column h4 {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+    color: #333;
+}

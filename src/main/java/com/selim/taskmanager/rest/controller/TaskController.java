@@ -2,6 +2,7 @@ package com.selim.taskmanager.rest.controller;
 
 import com.selim.taskmanager.rest.model.TaskAddRequestModel;
 import com.selim.taskmanager.rest.model.TaskAddResponseModel;
+import com.selim.taskmanager.rest.model.TaskShowResponseModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,13 @@ public interface TaskController {
     @GetMapping("/show")
     ResponseEntity<List<TaskAddResponseModel>> getAll();
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     ResponseEntity<String> deleteTask(@PathVariable int id);
 
     @PostMapping("/update")
     ResponseEntity<String> updateTask(@RequestBody TaskAddRequestModel taskAddRequestModel);
 
     @GetMapping("show/{id}")
-    ResponseEntity<TaskAddResponseModel> getTaskById(@PathVariable int id);
+    ResponseEntity<List<TaskShowResponseModel>> getTaskByUserId(@PathVariable int id);
 
 }

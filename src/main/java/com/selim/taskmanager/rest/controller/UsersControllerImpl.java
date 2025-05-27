@@ -1,13 +1,15 @@
 package com.selim.taskmanager.rest.controller;
 
+import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
+import com.selim.taskmanager.rest.model.UsersShowResponseModel;
 import com.selim.taskmanager.service.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -26,7 +28,7 @@ public class UsersControllerImpl implements UsersController {
     }
 
     @Override
-    public ResponseEntity<List<UsersAddResponseModel>> getUsers() {
+    public ResponseEntity<List<UsersShowResponseModel>> getUsers() {
         return ResponseEntity.ok(usersService.getAllUsers());
     }
 
@@ -50,5 +52,10 @@ public class UsersControllerImpl implements UsersController {
     @Override
     public ResponseEntity<UsersAddResponseModel> findByEmail(String email) {
         return ResponseEntity.ok(usersService.findByEmail(email));
+    }
+
+    @Override
+    public ResponseEntity<List<GetUsersByUserIdModel>> getUsersByRoleId(UUID roleId) {
+        return ResponseEntity.ok(usersService.getUsersByRoleId(roleId));
     }
 }

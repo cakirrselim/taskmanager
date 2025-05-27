@@ -1,14 +1,15 @@
 package com.selim.taskmanager.data;
 
-import com.selim.taskmanager.entitiy.Users;
+import com.selim.taskmanager.entity.Users;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
-
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class UsersDaoImpl implements UsersDao {
@@ -68,5 +69,38 @@ public class UsersDaoImpl implements UsersDao {
         String sql = "select * from users where mail = ?";
         Users user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Users.class), email);
         return user;
+    }
+
+    @Override
+    public List<Users> getUsersByRoleId(UUID roleId) {
+        String sql = """
+            SELECT u.id, u.name, u.surname, u.username, u.password, u.mail
+            FROM users u
+            JOIN users_role ur ON u.id = ur.users_id
+            WHERE ur.role_id = ?
+            """;
+
+        RowMapper<Users> mapper = (rs, rowNum) -> {
+            Users user = new Users();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("name"));
+            user.setSurname(rs.getString("surname"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setMail(rs.getString("mail"));
+            return user;
+        };
+
+        return jdbcTemplate.query(sql, mapper, roleId);
+    }
+
+    @Override
+    public Users authenticateUser(String username, String password) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+        return jdbcTemplate.queryForObject(
+                sql,
+                new BeanPropertyRowMapper<>(Users.class),
+                username, password
+        );
     }
 }

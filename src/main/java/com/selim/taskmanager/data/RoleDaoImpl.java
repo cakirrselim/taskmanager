@@ -1,8 +1,13 @@
 package com.selim.taskmanager.data;
 
-import com.selim.taskmanager.entitiy.Role;
+import com.selim.taskmanager.entity.Role;
+import com.selim.taskmanager.entity.Users;
+import com.selim.taskmanager.rest.model.UsersShowResponseModel;
+import com.selim.taskmanager.service.RoleService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
@@ -14,6 +19,7 @@ import java.util.UUID;
 public class RoleDaoImpl implements RoleDao {
 
     private final JdbcTemplate jdbcTemplate;
+
 
     public RoleDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -58,9 +64,32 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public Role getRoleByName(String roleName) {
         String sql = "SELECT * FROM role WHERE name = ?";
-        Role role = (Role) jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Role.class), roleName);
+        Role role = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Role.class), roleName);
         return role;
     }
+
+    @Override
+    public List<Role> getRolesByUsername(String username) {
+        String sql = """
+        SELECT r.id, r.name, r.description
+        FROM role r
+        JOIN users_role ur ON r.id = ur.role_id
+        JOIN users u ON ur.users_id = u.id
+        WHERE u.username = ?
+    """;
+
+        RowMapper<Role> mapper = (rs, rowNum) -> {
+            Role role = new Role();
+            role.setId(UUID.fromString(rs.getString("id")));
+            role.setName(rs.getString("name"));
+            role.setDescription(rs.getString("description"));
+            return role;
+        };
+
+        return jdbcTemplate.query(sql, mapper, username);
+    }
+
+
 
     @Override
     public Role getRoleById(UUID id) {
@@ -68,4 +97,25 @@ public class RoleDaoImpl implements RoleDao {
         Role role = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Role.class), id);
         return role;
     }
+
+
+    @Override
+    public List<Role> getRolesByUserId(int userId) {
+        String sql = """
+        SELECT r.id, r.name, r.description
+        FROM role r
+        JOIN users_role ur ON r.id = ur.role_id
+        WHERE ur.users_id = ?
+    """;
+        RowMapper<Role> mapper = (rs, rowNum) -> {
+            Role role = new Role();
+            role.setId(UUID.fromString(rs.getString("id")));
+            role.setName(rs.getString("name"));
+            role.setDescription(rs.getString("description"));
+            return role;
+        };
+
+        return jdbcTemplate.query(sql, mapper, userId);
+    }
+
 }

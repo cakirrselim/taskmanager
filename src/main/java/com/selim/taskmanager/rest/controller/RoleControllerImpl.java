@@ -1,9 +1,6 @@
 package com.selim.taskmanager.rest.controller;
 
-import com.selim.taskmanager.rest.model.RoleAddRequestModel;
-import com.selim.taskmanager.rest.model.RoleAddResponseModel;
-import com.selim.taskmanager.rest.model.RoleShowResponseModel;
-import com.selim.taskmanager.rest.model.RoleUpdateRequestModel;
+import com.selim.taskmanager.rest.model.*;
 import com.selim.taskmanager.service.RoleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +32,7 @@ public class RoleControllerImpl implements RoleController {
     @Override
     public ResponseEntity<String> updateRole(RoleUpdateRequestModel roleUpdateRequestModel) {
         roleService.updateRole(roleUpdateRequestModel);
-        return ResponseEntity.ok("UPDATED");
+        return ResponseEntity.ok("Role with id \" + id + \" has been updated");
     }
 
     @Override
@@ -50,8 +47,19 @@ public class RoleControllerImpl implements RoleController {
     }
 
     @Override
+    public ResponseEntity<List<GetRolesByUserIdModel>> getRolesByUsername(String name) {
+        return ResponseEntity.ok(roleService.getRolesByUsername(name));
+    }
+
+
+    @Override
     public ResponseEntity<RoleAddResponseModel> getRoleById(UUID id) {
         RoleAddResponseModel roleAddResponseModel = roleService.getRoleById(id);
         return ResponseEntity.ok(roleAddResponseModel);
+    }
+
+    @Override
+    public ResponseEntity<List<GetRolesByUserIdModel>> getRolesByUserId(int userId) {
+        return ResponseEntity.ok(roleService.getRolesByUserId(userId));
     }
 }

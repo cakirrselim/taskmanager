@@ -1,10 +1,9 @@
 package com.selim.taskmanager.rest.controller;
 
-
 import com.selim.taskmanager.rest.model.TaskAddRequestModel;
 import com.selim.taskmanager.rest.model.TaskAddResponseModel;
+import com.selim.taskmanager.rest.model.TaskShowResponseModel;
 import com.selim.taskmanager.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -16,7 +15,6 @@ public class TaskControllerImpl implements TaskController {
 
     private final TaskService taskService;
 
-    @Autowired
     public TaskControllerImpl(TaskService taskService) {
         this.taskService = taskService;
     }
@@ -46,9 +44,8 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<TaskAddResponseModel> getTaskById(int id) {
-
-        return ResponseEntity.ok(taskService.getById(id));
+    public ResponseEntity<List<TaskShowResponseModel>> getTaskByUserId(int userId) {
+        return ResponseEntity.ok(taskService.getTaskByUserId(userId));
     }
 
 

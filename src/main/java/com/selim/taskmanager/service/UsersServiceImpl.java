@@ -1,28 +1,55 @@
 package com.selim.taskmanager.service;
 
+import com.selim.taskmanager.data.RoleDao;
+import com.selim.taskmanager.data.TaskDao;
 import com.selim.taskmanager.data.UsersDao;
-import com.selim.taskmanager.entitiy.Users;
+import com.selim.taskmanager.data.UsersRolesDao;
+import com.selim.taskmanager.entity.Role;
+import com.selim.taskmanager.entity.Task;
+import com.selim.taskmanager.entity.Users;
+import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
+import com.selim.taskmanager.rest.model.UsersShowResponseModel;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UsersServiceImpl implements UsersService {
 
     private final UsersDao usersDao;
+    private final RoleDao roleDao;
+    private final UsersRolesDao usersRolesDao;
+    private final TaskDao taskDao;
 
-    public UsersServiceImpl(UsersDao usersDao) {
+    public UsersServiceImpl(UsersDao usersDao, RoleDao roleDao, UsersRolesDao usersRolesDao, TaskDao taskDao) {
         this.usersDao = usersDao;
+        this.roleDao = roleDao;
+        this.usersRolesDao = usersRolesDao;
+        this.taskDao = taskDao;
     }
 
-
+    // TİP DÖNÜŞÜMÜ
     @Override
-    public List<UsersAddResponseModel> getAllUsers() {
+    public List<GetUsersByUserIdModel> getUsersByRoleId(UUID roleId) {
+        return usersDao.getUsersByRoleId(roleId).stream().map(users -> new GetUsersByUserIdModel(
+                users.getId(), users.getName(), users.getSurname(), users.getUsername(), users.getPassword(), users.getMail()
+        )).collect(Collectors.toList());
+    }
+
+    // EZİYET CODING
+    @Override
+    public List<UsersShowResponseModel> getAllUsers() {
         List<Users> users = usersDao.getAllUsers();
-        return users.stream().map(u -> new UsersAddResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail())).toList();
+        for (Users user : users) {
+            List<Role> roles = usersRolesDao.getRolesByUserId(user.getId());
+            user.setRoles(roles);
+            List<Task> tasks = taskDao.getTaskByUserId(user.getId());
+            user.setTasks(tasks);
+        }
+        return users.stream().map(u -> new UsersShowResponseModel(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(), u.getMail(), u.getRoles(), u.getTasks())).toList();
     }
 
     @Override
