@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface UsersRolesController {
 
     @PostMapping("/{userId}/assignRole/{roleId}")
-    ResponseEntity<String> assignRoleToUser(@PathVariable int userId, @PathVariable UUID roleId);
+    ResponseEntity<String> assignRoleToUser(@PathVariable("userId") int userId, @PathVariable("roleId") UUID roleId);
 
     @GetMapping("/getRolesByUserId/{userId}")
     List<GetRolesByUserIdModel> getRolesByUserId(@PathVariable int userId);

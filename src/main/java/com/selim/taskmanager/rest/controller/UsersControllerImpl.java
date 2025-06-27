@@ -6,6 +6,7 @@ import com.selim.taskmanager.rest.model.UsersAddResponseModel;
 import com.selim.taskmanager.rest.model.UsersShowResponseModel;
 import com.selim.taskmanager.service.UsersService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -33,7 +34,7 @@ public class UsersControllerImpl implements UsersController {
     }
 
     @Override
-    public ResponseEntity<String> deleteUser(int id) {
+    public ResponseEntity<String> deleteUser(@PathVariable("id")int id) {
         usersService.deleteUser(id);
         return ResponseEntity.ok("User deleted" + id);
     }

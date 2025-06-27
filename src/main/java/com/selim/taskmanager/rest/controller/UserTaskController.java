@@ -14,7 +14,7 @@ public interface UserTaskController {
     ResponseEntity<String> assignUserToTask(@PathVariable int userId, @PathVariable int taskId);
 
     @GetMapping("/getTasksByUserId/{userId}")
-    List<TaskShowResponseModel> getRolesByUserId(@PathVariable int userId);
+    List<TaskShowResponseModel> getRolesByUserId(@PathVariable("userId") int userId);
 
     @DeleteMapping("/{userId}/deleteTask/{taskId}")
     ResponseEntity<String> deleteUserFromRole(@PathVariable int userId, @PathVariable int taskId);

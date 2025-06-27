@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./Login.css";
 
-function Login({ setUsername, setUserId, setRoles }) {
+function Login({setUsername, setUserId, setRoles}) {
     const [usernameInput, setUsernameInput] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -13,24 +13,31 @@ function Login({ setUsername, setUserId, setRoles }) {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/auth/login", {
+            const BACKEND_URL = "http://localhost:8080";
+
+            const response = await axios.post(`${BACKEND_URL}/auth/login`, {
                 username: usernameInput,
                 password,
             });
 
-            const { username, id, roles } = response.data;
-            console.log("Gelen roller:", roles); // <-- Burada kontrol et
-
+            const {username, id, roles} = response.data;
+            console.log("Gelen roller:", roles);
 
             if (username && id !== undefined) {
                 setUsername(username);
                 setUserId(id);
 
                 if (roles && Array.isArray(roles)) {
-                    setRoles(roles); // ROLLERİ GLOBAL STATE'E GÖNDERİYORUZ
+                    const roleNames = roles
+                        .map(r => r.toLowerCase())
+                        .filter(Boolean);
+                    localStorage.setItem("roles", JSON.stringify(roleNames));
+                    localStorage.setItem("role", roleNames.includes("admin") ? "admin" : "user");
+                    setRoles(roleNames);  // burada da düzelt
                 } else {
-                    console.warn("Sunucudan rol bilgisi alınamadı.");
                     setRoles([]);
+                    localStorage.setItem("roles", JSON.stringify([]));
+                    localStorage.setItem("role", "user");
                 }
 
                 setError("");

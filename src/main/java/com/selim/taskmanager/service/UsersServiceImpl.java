@@ -81,6 +81,14 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void deleteUser(int id) {
+        // Bu kısım kullanıcıya atanmış bir rol olsa bile kullanıcıyı siler.
+        List<Role> roleId = usersRolesDao.getRolesByUserId(id);
+
+        for (Role role : roleId) {
+            if (role != null) {
+                usersRolesDao.deleteUserFromRole(id, role.getId());
+            }
+        }
         usersDao.deleteUser(id);
     }
 

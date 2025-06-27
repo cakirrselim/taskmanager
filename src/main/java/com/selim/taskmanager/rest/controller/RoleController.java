@@ -31,6 +31,6 @@ public interface RoleController {
     ResponseEntity<RoleAddResponseModel> getRoleById(@PathVariable UUID id);
 
     @GetMapping("/{userId}/roles")
-    ResponseEntity<List<GetRolesByUserIdModel>> getRolesByUserId(@PathVariable int userId);
+    ResponseEntity<List<GetRolesByUserIdModel>> getRolesByUserId(@PathVariable("userId") int userId);
 
 }

@@ -32,7 +32,7 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<String> deleteTask(int id) {
+    public ResponseEntity<String> deleteTask(@PathVariable("id") int id) {
         taskService.delete(id);
         return ResponseEntity.ok("Deleted task with id " + id);
     }

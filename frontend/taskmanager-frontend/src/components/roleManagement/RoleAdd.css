@@ -1,0 +1,101 @@
+.roleadd-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px #ebebeb;
+    max-width: 650px;
+    margin: 2rem auto;
+}
+
+.roleadd-section {
+    flex: 1 1 220px;
+    min-width: 220px;
+}
+
+.roleadd-form {
+    display: flex;
+    flex-direction: row;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+}
+
+.roleadd-form input[type="text"] {
+    flex: 1;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.roleadd-form button {
+    padding: 0.42rem 1.1rem;
+    background: #4954d9;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.2s;
+}
+.roleadd-form button:disabled {
+    background: #b1b1b1;
+}
+
+.roleadd-success {
+    color: #12620b;
+    margin-top: 0.5rem;
+}
+
+.roleadd-error {
+    color: #c51717;
+    margin-top: 0.5rem;
+}
+
+.roleadd-list-section {
+    flex: 1 1 220px;
+    min-width: 220px;
+}
+
+.roleadd-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.roleadd-role-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #eef2fa;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+}
+
+.roleadd-role-card small {
+    color: #888;
+}
+
+.roleadd-delete-btn {
+    padding: 0.22rem 0.8rem;
+    background: #e94949;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.98em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.roleadd-delete-btn:disabled {
+    background: #b1b1b1;
+    cursor: not-allowed;
+}
+
+.roleadd-no-access {
+    color: #c51717;
+    text-align: center;
+    font-size: 1.1em;
+    padding: 2rem;
+}

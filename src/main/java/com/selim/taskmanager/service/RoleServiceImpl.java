@@ -2,6 +2,7 @@ package com.selim.taskmanager.service;
 
 import com.selim.taskmanager.data.RoleDao;
 import com.selim.taskmanager.data.UsersDao;
+import com.selim.taskmanager.data.UsersRolesDao;
 import com.selim.taskmanager.entity.Role;
 import com.selim.taskmanager.entity.Users;
 import com.selim.taskmanager.rest.model.*;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
     private RoleDao roleDao;
     private UsersDao usersDao;
+    private UsersRolesDao usersRolesDao;
+
 
     public RoleServiceImpl(RoleDao roleDao, UsersDao usersDao) {
         this.roleDao = roleDao;
@@ -34,6 +37,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void deleteRole(UUID roleId) {
+        List<Users> users = usersDao.getUsersByRoleId(roleId);
+        for (Users user : users) {
+            usersRolesDao.deleteUserFromRole(user.getId(), roleId);
+        }
         roleDao.deleteRole(roleId);
     }
 

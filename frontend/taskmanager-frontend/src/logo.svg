@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" id="logo" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 841.9 595.3" xml:space="preserve">
+  <g>
+    <circle fill="#61DAFB" cx="420.9" cy="296.5" r="50.3"/>
+      <path fill="none" stroke="#61DAFB" strokeWidth="15" d="M420.9,296.5
+          c-36.4,0-69.7,11.6-96.4,31.2c-4.3,3-8.5,6.3-12.5,9.9
+          c-12.7,12.1-20.3,29-20.3,48c0,37.5,30.4,68,68,68
+          c36.4,0,69.7-11.6,96.4-31.2c4.3-3,8.5-6.3,12.5-9.9
+          c12.7-12.1,20.3-29,20.3-48C488.9,326.9,458.5,296.5,420.9,296.5z"/>
+  </g>
+</svg>

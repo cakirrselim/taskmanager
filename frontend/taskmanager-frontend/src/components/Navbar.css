@@ -3,14 +3,13 @@
     padding: 1rem 2rem;
 
     display: flex;
-    justify-content: flex-start; /* Başlangıçtan başla, aradaki boşluk span ve button ile ayarlanacak */
-    align-items: center;         /* Dikey ortala */
+    justify-content: flex-start;
+    align-items: center;
     gap: 2rem;
 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Navlinkler sol tarafta */
 .nav-link {
     color: #ecf0f1;
     text-decoration: none;
@@ -31,9 +30,9 @@
     color: #fff;
 }
 
-/* Sağdaki kullanıcı ve çıkış yap bölümü */
+
 .nav-logout {
-    margin-left: auto;     /* Diğer nav linklerden sağa it */
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -45,7 +44,7 @@
     font-weight: bold;
 }
 
-/* Çıkış yap butonu */
+
 .logout-btn {
     background-color: #1abc9c;
     border: none;
@@ -57,10 +56,9 @@
     transition: background-color 0.3s ease;
 }
 .navbar {
-    height: 150px; /* Örneğin 60px sabit yükseklik */
-    overflow: hidden; /* İçerik taşarsa gizle */
+    height: 150px;
+    overflow: hidden;
 }
-
 
 .logout-btn:hover {
     background-color: #16a085;

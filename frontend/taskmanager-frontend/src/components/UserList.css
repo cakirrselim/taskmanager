@@ -1,0 +1,23 @@
+.userlist-container {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.userlist-button {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.userlist-li {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-left: 4px solid #4caf50;
+}

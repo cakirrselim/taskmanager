@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-public interface TaskController {
+public interface
+TaskController {
 
     @PostMapping("/add")
     ResponseEntity<TaskAddResponseModel> createTask(@RequestBody TaskAddRequestModel taskAddRequestModel);

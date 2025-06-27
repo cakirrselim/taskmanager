@@ -3,14 +3,33 @@ import "./Navbar.css";
 
 function Navbar({ username, setUsername, roles }) {
     const navigate = useNavigate();
+    console.log("Navbar'daki roller:", roles);
 
     const handleLogout = () => {
         setUsername(null);
         navigate("/login");
     };
 
+    // Eğer kullanıcı login değilse sadece Giriş butonunu göster
+    if (!username) {
+        return (
+            <div className="nav">
+                <NavLink
+                    to="/login"
+                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                >
+                    🔐 Giriş
+                </NavLink>
+            </div>
+        );
+    }
+
+    // Kullanıcı giriş yapmış, rol kontrolü yapalım:
+    const isAdmin = roles?.includes("admin");
+
     return (
         <div className="nav">
+            {/* Roller ve Görevler butonları tüm giriş yapanlarda görünür */}
             <NavLink
                 to="/roles"
                 className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
@@ -25,75 +44,61 @@ function Navbar({ username, setUsername, roles }) {
                 📝 Görevler
             </NavLink>
 
-            {roles?.includes("admin") && (
-                <NavLink
-                    to="/users"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    👤 Kullanıcılar
-                </NavLink>
+            {/* Sadece admin rolündeyse diğer butonlar görünür */}
+            {isAdmin && (
+                <>
+                    <NavLink
+                        to="/users"
+                        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                    >
+                        👤 Kullanıcılar
+                    </NavLink>
+
+                    <NavLink
+                        to="/role-assignment"
+                        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                    >
+                        🔧 Rol Ata/Kaldır
+                    </NavLink>
+
+                    <NavLink
+                        to="/task-assignment"
+                        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                    >
+                        📋 Görev Ata/Kaldır
+                    </NavLink>
+
+                    {/* REVİZE: Bu NavLink '/task/add' rotasına gider */}
+                    <NavLink
+                        to="/task/add"
+                        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                    >
+                        ✨ Görev Oluştur
+                    </NavLink>
+
+                    <NavLink
+                        to="/user-management"
+                        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                    >
+                        👥 Kullanıcı Ekle/Sil
+                    </NavLink>
+
+                    <NavLink
+                        to="/role-management"
+                        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                    >
+                        🎭 Rol Ekle/Sil
+                    </NavLink>
+                </>
             )}
 
-            {roles?.includes("admin") && (
-                <NavLink
-                    to="/assign-role"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    🔧 Rol Ata/Kaldır
-                </NavLink>
-            )}
-
-            {roles?.includes("admin") && (
-                <NavLink
-                    to="/task-assignment"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    📋 Görev Ata/Kaldır
-                </NavLink>
-            )}
-
-            {roles?.includes("admin") && (
-                <NavLink
-                    to="/task-assign"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    ✨ Görev Oluştur
-                </NavLink>
-            )}
-
-            {roles?.includes("admin") && (
-                <NavLink
-                    to="/user-management"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    👥 Kullanıcı Ekle/Sil
-                </NavLink>
-            )}
-
-            {roles?.includes("admin") && (
-                <NavLink
-                    to="/role-management"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    🎭 Rol Ekle/Sil
-                </NavLink>
-            )}
-
-            {username ? (
-                <div className="nav-logout">
-                    <span>👋 {username}</span>
-                    <button onClick={handleLogout} className="logout-btn">
-                        🚪 Çıkış Yap
-                    </button>
-                </div>
-            ) : (
-                <NavLink
-                    to="/login"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    🔐 Giriş
-                </NavLink>
-            )}
+            {/* Kullanıcı adı ve çıkış butonu */}
+            <div className="nav-logout">
+                <span>👋 {username}</span>
+                <button onClick={handleLogout} className="logout-btn">
+                    🚪 Çıkış Yap
+                </button>
+            </div>
         </div>
     );
 }

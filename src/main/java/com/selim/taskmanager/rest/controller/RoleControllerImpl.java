@@ -3,6 +3,7 @@ package com.selim.taskmanager.rest.controller;
 import com.selim.taskmanager.rest.model.*;
 import com.selim.taskmanager.service.RoleService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -24,7 +25,7 @@ public class RoleControllerImpl implements RoleController {
     }
 
     @Override
-    public ResponseEntity<String> deleteRole(UUID id) {
+    public ResponseEntity<String> deleteRole(@PathVariable("id") UUID id) {
         roleService.deleteRole(id);
         return ResponseEntity.ok("Role with id \" + id + \" has been deleted");
     }

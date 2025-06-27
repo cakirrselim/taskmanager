@@ -5,18 +5,16 @@ import "./RoleAssignmentPage.css";
 const RoleAssignmentPage = () => {
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
-    const [selectedUserId, setSelectedUserId] = useState("");
-    const [selectedRoleId, setSelectedRoleId] = useState("");
-    const [lastAssignedUser, setLastAssignedUser] = useState(null); // ✅ EKLENDİ
-    const [lastAssignedRole, setLastAssignedRole] = useState(null); // ✅ EKLENDİ
+
+    const [selectedUserIdAssign, setSelectedUserIdAssign] = useState("");
+    const [selectedRoleIdAssign, setSelectedRoleIdAssign] = useState("");
+
+    const [selectedUserIdRemove, setSelectedUserIdRemove] = useState("");
+    const [selectedRoleIdRemove, setSelectedRoleIdRemove] = useState("");
+
+    const [userRoles, setUserRoles] = useState({});
 
     useEffect(() => {
-        const role = localStorage.getItem("role");
-        if (role !== "admin") {
-            alert("Bu sayfaya sadece admin erişebilir.");
-            window.location.href = "/";
-        }
-
         fetchUsersAndRoles();
     }, []);
 
@@ -27,72 +25,137 @@ const RoleAssignmentPage = () => {
 
             setUsers(usersRes.data);
             setRoles(rolesRes.data);
+
+            // Kullanıcıların rollerini map'e koy
+            const rolesMap = {};
+            usersRes.data.forEach(user => {
+                rolesMap[user.id] = user.roles || [];
+            });
+            setUserRoles(rolesMap);
         } catch (err) {
             console.error("Veriler alınırken hata:", err);
         }
     };
 
     const assignRole = async () => {
-        if (!selectedUserId || !selectedRoleId) {
+        if (!selectedUserIdAssign || !selectedRoleIdAssign) {
             alert("Kullanıcı ve rol seçin.");
             return;
         }
 
         try {
-            await axios.post(`http://localhost:8080/roleUserRelation/${selectedUserId}/assignRole/${selectedRoleId}`);
+            await axios.post(
+                `http://localhost:8080/roleUserRelation/${selectedUserIdAssign}/assignRole/${selectedRoleIdAssign}`
+            );
             alert("Rol atama başarılı!");
-
-            // ✅ Son atama bilgilerini al
-            const assignedUser = users.find((u) => u.id === parseInt(selectedUserId));
-            const assignedRole = roles.find((r) => r.id === selectedRoleId);
-
-            setLastAssignedUser(assignedUser);
-            setLastAssignedRole(assignedRole);
-
-            fetchUsersAndRoles(); // verileri yenile
+            setSelectedUserIdAssign("");
+            setSelectedRoleIdAssign("");
+            fetchUsersAndRoles();
         } catch (err) {
             alert("Rol atama sırasında hata oluştu.");
+            console.error(err);
         }
     };
 
+    const removeRole = async () => {
+        if (!selectedUserIdRemove || !selectedRoleIdRemove) {
+            alert("Kullanıcı ve kaldırılacak rolü seçin.");
+            return;
+        }
+
+        try {
+            await axios.delete(
+                `http://localhost:8080/roleUserRelation/${selectedUserIdRemove}/deleteRole/${selectedRoleIdRemove}`
+            );
+            alert("Rol kaldırma başarılı!");
+            setSelectedUserIdRemove("");
+            setSelectedRoleIdRemove("");
+            fetchUsersAndRoles();
+        } catch (err) {
+            alert("Rol kaldırma sırasında hata oluştu.");
+            console.error(err);
+        }
+    };
+
+
+    const rolesOfSelectedUser = selectedUserIdRemove ? userRoles[selectedUserIdRemove] || [] : [];
+
     return (
         <div className="role-assignment-container">
-            {/* Sol Kısım */}
             <div className="left-panel">
-                <h3>👥 Kullanıcıya Rol Ata</h3>
-                <select value={selectedUserId} onChange={(e) => setSelectedUserId(e.target.value)}>
-                    <option value="">Kullanıcı Seç</option>
-                    {users.map((user) => (
-                        <option key={user.id} value={user.id}>
-                            {user.username}
-                        </option>
-                    ))}
-                </select>
+                {/* Rol Atama */}
+                <div className="section">
+                    <h3>👥 Kullanıcıya Rol Ata</h3>
+                    <select
+                        value={selectedUserIdAssign}
+                        onChange={(e) => setSelectedUserIdAssign(e.target.value)}
+                    >
+                        <option value="">Kullanıcı Seç</option>
+                        {users.map((user) => (
+                            <option key={user.id} value={user.id}>
+                                {user.username}
+                            </option>
+                        ))}
+                    </select>
 
-                <select value={selectedRoleId} onChange={(e) => setSelectedRoleId(e.target.value)}>
-                    <option value="">Rol Seç</option>
-                    {roles.map((role) => (
-                        <option key={role.id} value={role.id}>
-                            {role.name}
-                        </option>
-                    ))}
-                </select>
+                    <select
+                        value={selectedRoleIdAssign}
+                        onChange={(e) => setSelectedRoleIdAssign(e.target.value)}
+                    >
+                        <option value="">Rol Seç</option>
+                        {roles.map((role) => (
+                            <option key={role.id} value={role.id}>
+                                {role.name}
+                            </option>
+                        ))}
+                    </select>
 
-                <button onClick={assignRole}>Rol Ata</button>
+                    <button onClick={assignRole}>Rol Ata</button>
+                </div>
 
-                {/* ✅ SON ATAMA BİLGİSİ */}
-                {lastAssignedUser && lastAssignedRole && (
-                    <div className="last-assignment-box">
-                        <h4>✅ Son Atama</h4>
-                        <p><strong>Kullanıcı:</strong> {lastAssignedUser.username}</p>
-                        <p><strong>Rol:</strong> {lastAssignedRole.name}</p>
-                    </div>
-                )}
+                {/* Rol Kaldırma */}
+                <div className="section" style={{ marginTop: "40px" }}>
+                    <h3>❌ Kullanıcıdan Rol Kaldır</h3>
+                    <select
+                        value={selectedUserIdRemove}
+                        onChange={(e) => {
+                            setSelectedUserIdRemove(e.target.value);
+                            setSelectedRoleIdRemove("");
+                        }}
+                    >
+                        <option value="">Kullanıcı Seç</option>
+                        {users.map((user) => (
+                            <option key={user.id} value={user.id}>
+                                {user.username}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select
+                        value={selectedRoleIdRemove}
+                        onChange={(e) => setSelectedRoleIdRemove(e.target.value)}
+                        disabled={!selectedUserIdRemove || rolesOfSelectedUser.length === 0}
+                    >
+                        <option value="">Kaldırılacak Rolü Seç</option>
+                        {rolesOfSelectedUser.length === 0 && selectedUserIdRemove && (
+                            <option disabled>Bu kullanıcıya atanmış rol yok</option>
+                        )}
+                        {rolesOfSelectedUser.map((role) => (
+                            <option key={role.id} value={role.id}>
+                                {role.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    <button onClick={removeRole} disabled={!selectedRoleIdRemove}>
+                        Rol Kaldır
+                    </button>
+                </div>
             </div>
 
-            {/* Sağ Kısım */}
+            {/* Sağ panel - kullanıcılar ve roller */}
             <div className="right-panel">
-                <h4>👤 Tüm Kullanıcılar</h4>
+                <h3>👤 Tüm Kullanıcılar ve Rolleri</h3>
                 <ul>
                     {users.map((user) => (
                         <li key={user.id}>
@@ -101,13 +164,6 @@ const RoleAssignmentPage = () => {
                                 ? user.roles.map((r) => r.name).join(", ")
                                 : "Atanmış rol yok"}
                         </li>
-                    ))}
-                </ul>
-
-                <h4>🎭 Tüm Roller</h4>
-                <ul>
-                    {roles.map((role) => (
-                        <li key={role.id}>{role.name}</li>
                     ))}
                 </ul>
             </div>
