@@ -7,6 +7,7 @@ function Login({setUsername, setUserId, setRoles}) {
     const [usernameInput, setUsernameInput] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [showRegister, setShowRegister] = useState(false); // Kayıt modalı için state
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -52,6 +53,16 @@ function Login({setUsername, setUserId, setRoles}) {
         }
     };
 
+    // Kayıt modalını aç
+    const handleRegisterOpen = () => {
+        setShowRegister(true);
+    };
+
+    // Kayıt modalını kapat
+    const handleRegisterClose = () => {
+        setShowRegister(false);
+    };
+
     return (
         <div className="login-container">
             <h2>Giriş Yap</h2>
@@ -70,9 +81,28 @@ function Login({setUsername, setUserId, setRoles}) {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Giriş</button>
+                <div style={{ display: "flex", gap: "0.5em", marginTop: "0.5em" }}>
+                    <button type="submit">Giriş</button>
+                    <button
+                        type="button"
+                        style={{ backgroundColor: "#f0f0f0" }}
+                        onClick={handleRegisterOpen}
+                    >
+                        Kayıt Ol
+                    </button>
+                </div>
                 {error && <p className="error">{error}</p>}
             </form>
+
+            {showRegister && (
+                <div className="register-modal">
+                    <div className="register-modal-content">
+                        <h3>Kayıt Ol</h3>
+                        <p>Buraya bir kayıt formu/komponenti eklenebilir.</p>
+                        <button onClick={handleRegisterClose}>Kapat</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

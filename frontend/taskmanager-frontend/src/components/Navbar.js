@@ -10,17 +10,10 @@ function Navbar({ username, setUsername, roles }) {
         navigate("/login");
     };
 
-    // Eğer kullanıcı login değilse sadece Giriş butonunu göster
+    // Kullanıcı login değilse navbar boş döndürülüyor
     if (!username) {
         return (
-            <div className="nav">
-                <NavLink
-                    to="/login"
-                    className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-                >
-                    🔐 Giriş
-                </NavLink>
-            </div>
+            <div className="nav"></div>
         );
     }
 
@@ -68,7 +61,6 @@ function Navbar({ username, setUsername, roles }) {
                         📋 Görev Ata/Kaldır
                     </NavLink>
 
-                    {/* REVİZE: Bu NavLink '/task/add' rotasına gider */}
                     <NavLink
                         to="/task/add"
                         className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}

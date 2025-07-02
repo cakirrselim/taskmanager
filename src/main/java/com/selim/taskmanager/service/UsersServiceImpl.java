@@ -11,6 +11,7 @@ import com.selim.taskmanager.rest.model.GetUsersByUserIdModel;
 import com.selim.taskmanager.rest.model.UsersAddRequestModel;
 import com.selim.taskmanager.rest.model.UsersAddResponseModel;
 import com.selim.taskmanager.rest.model.UsersShowResponseModel;
+import com.selim.taskmanager.util.PasswordUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class UsersServiceImpl implements UsersService {
     private final RoleDao roleDao;
     private final UsersRolesDao usersRolesDao;
     private final TaskDao taskDao;
+    private final PasswordUtil passwordUtil = new PasswordUtil();
 
     public UsersServiceImpl(UsersDao usersDao, RoleDao roleDao, UsersRolesDao usersRolesDao, TaskDao taskDao) {
         this.usersDao = usersDao;
@@ -58,8 +60,12 @@ public class UsersServiceImpl implements UsersService {
         users.setName(usersAddRequestModel.name());
         users.setSurname(usersAddRequestModel.surname());
         users.setUsername(usersAddRequestModel.username());
-        users.setPassword(usersAddRequestModel.password());
+
+        // Hashing
+        String hashedPassword = PasswordUtil.hashPassword(usersAddRequestModel.password());
+        users.setPassword(hashedPassword);
         users.setMail(usersAddRequestModel.email());
+
         Users savedUser = usersDao.addUser(users);
         UsersAddResponseModel usersAddResponseModel = new UsersAddResponseModel(
                 savedUser.getId(), savedUser.getName(), savedUser.getSurname(), savedUser.getUsername(), savedUser.getPassword(), savedUser.getMail());
@@ -81,9 +87,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void deleteUser(int id) {
-        // Bu kısım kullanıcıya atanmış bir rol olsa bile kullanıcıyı siler.
-        List<Role> roleId = usersRolesDao.getRolesByUserId(id);
+        // This part provides that deleting user although he/she has assigned a role.
 
+        List<Role> roleId = usersRolesDao.getRolesByUserId(id);
         for (Role role : roleId) {
             if (role != null) {
                 usersRolesDao.deleteUserFromRole(id, role.getId());
