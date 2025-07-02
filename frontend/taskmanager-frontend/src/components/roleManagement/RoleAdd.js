@@ -4,12 +4,11 @@ import "./RoleAdd.css";
 
 const BASE_URL = "http://localhost:8080/role";
 
-// Hata mesajlarını düzgün string'e dönüştüren yardımcı fonksiyon
 function getErrorMessage(error) {
     if (!error) return "Bilinmeyen hata oluştu.";
     if (typeof error === "string") return error;
     if (typeof error === "object") {
-        if (error.error) return error.error; // Spring default error key
+        if (error.error) return error.error;
         if (error.message) return error.message;
         if (error.status && error.error)
             return `${error.status} - ${error.error}`;
@@ -21,10 +20,10 @@ function getErrorMessage(error) {
 function RoleAdd({ roles }) {
     const [allRoles, setAllRoles] = useState([]);
     const [newRoleName, setNewRoleName] = useState("");
+    const [newRoleDesc, setNewRoleDesc] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
 
-    // Roller listesini getir
     const fetchRoles = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/show`);
@@ -38,18 +37,25 @@ function RoleAdd({ roles }) {
         fetchRoles();
     }, []);
 
-    // Rol ekleme işlemi
     const handleAddRole = async (e) => {
         e.preventDefault();
         if (!newRoleName.trim()) {
             setMessage({ type: "error", text: "Rol adı boş olamaz!" });
             return;
         }
+        if (!newRoleDesc.trim()) {
+            setMessage({ type: "error", text: "Açıklama boş olamaz!" });
+            return;
+        }
         setLoading(true);
         try {
-            await axios.post(`${BASE_URL}/add`, { name: newRoleName });
+            await axios.post(`${BASE_URL}/add`, {
+                name: newRoleName,
+                description: newRoleDesc
+            });
             setMessage({ type: "success", text: "Rol başarıyla eklendi!" });
             setNewRoleName("");
+            setNewRoleDesc("");
             fetchRoles();
         } catch (error) {
             setMessage({
@@ -61,7 +67,6 @@ function RoleAdd({ roles }) {
         }
     };
 
-    // Rol silme işlemi
     const handleDeleteRole = async (roleId) => {
         if (!window.confirm("Bu rolü silmek istediğinize emin misiniz?")) return;
         setLoading(true);
@@ -79,7 +84,6 @@ function RoleAdd({ roles }) {
         }
     };
 
-    // Sadece admin ise sayfa görünsün
     if (!roles || !roles.includes("admin")) {
         return <div className="roleadd-no-access">Bu alanı görüntüleme yetkiniz yok.</div>;
     }
@@ -88,7 +92,7 @@ function RoleAdd({ roles }) {
         <div className="roleadd-container">
             <div className="roleadd-section">
                 <h3>🎭 Yeni Rol Ekle</h3>
-                <form onSubmit={handleAddRole} className="roleadd-form">
+                <form onSubmit={handleAddRole} className="roleadd-form" style={{ flexDirection: "column" }}>
                     <input
                         type="text"
                         placeholder="Rol Adı"
@@ -97,7 +101,20 @@ function RoleAdd({ roles }) {
                         disabled={loading}
                         required
                     />
-                    <button type="submit" disabled={loading}>
+                    <input
+                        type="text"
+                        placeholder="Açıklama"
+                        value={newRoleDesc}
+                        onChange={(e) => { setNewRoleDesc(e.target.value); setMessage(null); }}
+                        disabled={loading}
+                        required
+                        style={{ marginTop: "0.7rem" }}
+                    />
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        style={{ marginTop: "0.7rem" }}
+                    >
                         {loading ? "Ekleniyor..." : "Ekle"}
                     </button>
                 </form>
@@ -113,7 +130,13 @@ function RoleAdd({ roles }) {
                     {allRoles.length === 0 && <span>Henüz rol yok.</span>}
                     {allRoles.map(role => (
                         <div key={role.id} className="roleadd-role-card">
-                            <span><strong>{role.name}</strong> <small>(ID: {role.id})</small></span>
+                            <span>
+                                <strong>{role.name}</strong>
+                                {role.description && (
+                                    <span className="roleadd-role-desc"> — {role.description}</span>
+                                )}
+                                <small> (ID: {role.id})</small>
+                            </span>
                             <button
                                 className="roleadd-delete-btn"
                                 onClick={() => handleDeleteRole(role.id)}

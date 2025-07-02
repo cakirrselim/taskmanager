@@ -1,18 +1,18 @@
-
 package com.selim.taskmanager.service;
 
 import com.selim.taskmanager.data.UsersDao;
 import com.selim.taskmanager.entity.Users;
-import com.selim.taskmanager.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; // Ekle
+import org.springframework.security.crypto.password.PasswordEncoder; // Ekle
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,15 +24,26 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private RoleService roleService;
 
+    // PasswordEncoder enjekte edilebilir
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public ResponseEntity<?> authenticateUser(Map<String, String> loginData) {
         String username = loginData.get("username");
-        String password = loginData.get("password");
+        String rawPassword = loginData.get("password");
 
         try {
-            Users user = usersDao.authenticateUser(username, password);
+            Users user = usersDao.findByUsername(username); // Sadece username ile getir
+            if (user == null) {
+                throw new Exception("Kullanıcı bulunamadı");
+            }
+            String hashedPassword = user.getPassword(); // Veritabanındaki hash
 
-            // Kullanıcının rollerini al
+            // Şifreyi kontrol et
+            if (!passwordEncoder.matches(rawPassword, hashedPassword)) {
+                throw new Exception("Şifre hatalı");
+            }
+
             List<String> roles = roleService.getRolesByUsername(username)
                     .stream()
                     .map(role -> role.name())
@@ -41,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
             Map<String, Object> response = new HashMap<>();
             response.put("id", user.getId());
             response.put("username", user.getUsername());
-            response.put("roles", roles); // Rolleri yanıta ekle
+            response.put("roles", roles);
 
             return ResponseEntity.ok(response);
 

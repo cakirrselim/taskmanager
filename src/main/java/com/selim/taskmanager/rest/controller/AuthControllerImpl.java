@@ -18,6 +18,7 @@ public class AuthControllerImpl implements AuthController {
     }
 
     @Override
+    @PostMapping("/login")
     public ResponseEntity<?> login(Map<String, String> loginData) {
         return authService.authenticateUser(loginData);
     }

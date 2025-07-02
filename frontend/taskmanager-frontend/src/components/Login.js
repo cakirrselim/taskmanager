@@ -1,13 +1,12 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-function Login({setUsername, setUserId, setRoles}) {
+function Login({ setUsername, setUserId, setRoles }) {
     const [usernameInput, setUsernameInput] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [showRegister, setShowRegister] = useState(false); // Kayıt modalı için state
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -21,9 +20,7 @@ function Login({setUsername, setUserId, setRoles}) {
                 password,
             });
 
-            const {username, id, roles} = response.data;
-            console.log("Gelen roller:", roles);
-
+            const { username, id, roles } = response.data;
             if (username && id !== undefined) {
                 setUsername(username);
                 setUserId(id);
@@ -34,7 +31,7 @@ function Login({setUsername, setUserId, setRoles}) {
                         .filter(Boolean);
                     localStorage.setItem("roles", JSON.stringify(roleNames));
                     localStorage.setItem("role", roleNames.includes("admin") ? "admin" : "user");
-                    setRoles(roleNames);  // burada da düzelt
+                    setRoles(roleNames);
                 } else {
                     setRoles([]);
                     localStorage.setItem("roles", JSON.stringify([]));
@@ -45,22 +42,15 @@ function Login({setUsername, setUserId, setRoles}) {
                 navigate("/");
             } else {
                 setError("Sunucudan geçerli kullanıcı verisi alınamadı.");
-                console.error("Eksik kullanıcı verisi:", response.data);
             }
         } catch (err) {
-            console.error("Giriş başarısız:", err);
             setError("Kullanıcı adı veya şifre hatalı.");
         }
     };
 
-    // Kayıt modalını aç
-    const handleRegisterOpen = () => {
-        setShowRegister(true);
-    };
-
-    // Kayıt modalını kapat
-    const handleRegisterClose = () => {
-        setShowRegister(false);
+    // "Kayıt Ol" tuşu register route'una yönlendirir
+    const handleRegisterClick = () => {
+        navigate("/register");
     };
 
     return (
@@ -86,23 +76,13 @@ function Login({setUsername, setUserId, setRoles}) {
                     <button
                         type="button"
                         style={{ backgroundColor: "#f0f0f0" }}
-                        onClick={handleRegisterOpen}
+                        onClick={handleRegisterClick}
                     >
                         Kayıt Ol
                     </button>
                 </div>
                 {error && <p className="error">{error}</p>}
             </form>
-
-            {showRegister && (
-                <div className="register-modal">
-                    <div className="register-modal-content">
-                        <h3>Kayıt Ol</h3>
-                        <p>Buraya bir kayıt formu/komponenti eklenebilir.</p>
-                        <button onClick={handleRegisterClose}>Kapat</button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

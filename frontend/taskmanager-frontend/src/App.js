@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import RoleList from "./components/RoleList";
 import TaskList from "./components/TaskList";
 import Navbar from "./components/Navbar";
@@ -11,14 +11,14 @@ import TaskAssignment from "./components/taskManagement/TaskAssigment";
 import TaskAdd from "./components/taskManagement/TaskAdd";
 import AddUser from "./components/userManagement/AddUser";
 import RoleAdd from "./components/roleManagement/RoleAdd";
-
+import Register from "./components/Register";
 
 function Roles({ userId }) {
-    const [roles, setRoles] = useState([]);
-    const [error, setError] = useState(null);
-    const [message, setMessage] = useState("Roller yükleniyor...");
+    const [roles, setRoles] = React.useState([]);
+    const [error, setError] = React.useState(null);
+    const [message, setMessage] = React.useState("Roller yükleniyor...");
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (userId) {
             fetch(`http://localhost:8080/role/${userId}/roles`)
                 .then((res) => {
@@ -53,50 +53,66 @@ function RoleManagement() {
     return <h2>Rol Ekle/Sil Sayfası</h2>;
 }
 
+// --- Bu bileşen login değilse hangi URL'de olursa olsun login'e zorlar ---
+function ForceLogin({ children, username }) {
+    const location = useLocation();
+
+    useEffect(() => {
+        // username yoksa login'e yönlendir
+        if (!username && location.pathname !== "/login") {
+            window.location.replace("/login"); // hard reload, F5'te de çalışır
+        }
+    }, [username, location.pathname]);
+
+    // username yoksa hiçbir içerik gösterme (anlık için)
+    if (!username && location.pathname !== "/login") {
+        return null;
+    }
+    return children;
+}
+
 function App() {
-    const [username, setUsername] = useState(null);
-    const [userId, setUserId] = useState(null);
-    const [roles, setRoles] = useState([]);
+    const [username, setUsername] = React.useState(null);
+    const [userId, setUserId] = React.useState(null);
+    const [roles, setRoles] = React.useState([]);
 
     return (
         <Router>
-            <Navbar username={username} setUsername={setUsername} roles={roles} />
-            <div style={{ padding: "1rem" }}>
-                <Routes>
-                    {!username ? (
-                        <>
-                            <Route
-                                path="/login"
-                                element={
+            <ForceLogin username={username}>
+                <Navbar username={username} setUsername={setUsername} roles={roles} />
+                <div style={{ padding: "1rem" }}>
+                    <Routes>
+                        {!username ? (
+                            <>
+                                <Route path="/login" element={
                                     <Login
                                         setUsername={setUsername}
                                         setUserId={setUserId}
                                         setRoles={setRoles}
                                     />
-                                }
-                            />
-                            <Route
-                                path="/"
-                                element={<Navigate to="/login" replace />}
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <Route path="/roles-add" element={<RoleAdd roles={roles} />} />
-                            <Route path="/task/add" element={<TaskAdd />} />
-                            <Route path="/role-assignment" element={<RoleAssignmentPage />} />
-                            <Route path="/roles" element={<Roles userId={userId} />} />
-                            <Route path="/tasks" element={<TaskList userId={userId} />} />
-                            <Route path="/users" element={<UserList />} />
-                            <Route path="/assign-role" element={<AssignRole />} />
-                            <Route path="/task-assignment" element={<TaskAssignment roles={roles} />} />
-                            <Route path="/user-management" element={<AddUser roles={roles} />} />
-                            <Route path="/role-management" element={<RoleAdd roles={roles} />} />
-                            <Route path="/" element={<h1>Hoşgeldiniz, {username}</h1>} />
-                        </>
-                    )}
-                </Routes>
-            </div>
+                                } />
+                                <Route path="/register" element={<Register />} />
+                                <Route path="*" element={<Navigate to="/login" replace />} />
+                            </>
+                        ) : (
+                            <>
+                                <Route path="/roles-add" element={<RoleAdd roles={roles} />} />
+                                <Route path="/task/add" element={<TaskAdd />} />
+                                <Route path="/role-assignment" element={<RoleAssignmentPage />} />
+                                <Route path="/roles" element={<Roles userId={userId} />} />
+                                <Route path="/tasks" element={<TaskList userId={userId} />} />
+                                <Route path="/users" element={<UserList />} />
+                                <Route path="/assign-role" element={<AssignRole />} />
+                                <Route path="/task-assignment" element={<TaskAssignment roles={roles} />} />
+                                <Route path="/user-management" element={<AddUser roles={roles} />} />
+                                <Route path="/role-management" element={<RoleAdd roles={roles} />} />
+                                <Route path="/" element={<h1>Hoşgeldiniz, {username}</h1>} />
+                                <Route path="*" element={<Navigate to="/" replace />} />
+                            </>
+                        )}
+                    </Routes>
+                </div>
+            </ForceLogin>
         </Router>
     );
 }
