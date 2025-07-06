@@ -46,6 +46,7 @@ function Register() {
                     Zaten bir hesabınız var mı?{" "}
                     <Link to="/login" style={{ color: "#1976d2" }}>
                         Giriş Yap
+
                     </Link>
                 </p>
             </div>
