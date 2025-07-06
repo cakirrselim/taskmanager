@@ -54,18 +54,25 @@ function RoleManagement() {
 }
 
 // --- Bu bileşen login değilse hangi URL'de olursa olsun login'e zorlar ---
+// register ekranı da istisna olarak açıldı
 function ForceLogin({ children, username }) {
     const location = useLocation();
 
     useEffect(() => {
-        // username yoksa login'e yönlendir
-        if (!username && location.pathname !== "/login") {
-            window.location.replace("/login"); // hard reload, F5'te de çalışır
+        if (
+            !username &&
+            location.pathname !== "/login" &&
+            location.pathname !== "/register"
+        ) {
+            window.location.replace("/login");
         }
     }, [username, location.pathname]);
 
-    // username yoksa hiçbir içerik gösterme (anlık için)
-    if (!username && location.pathname !== "/login") {
+    if (
+        !username &&
+        location.pathname !== "/login" &&
+        location.pathname !== "/register"
+    ) {
         return null;
     }
     return children;

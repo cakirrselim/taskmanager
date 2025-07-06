@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
@@ -41,6 +41,14 @@ function Register() {
                 <button type="submit">Kayıt Ol</button>
                 {error && <p className="error">{error}</p>}
             </form>
+            <div style={{ marginTop: "16px", textAlign: "center" }}>
+                <p>
+                    Zaten bir hesabınız var mı?{" "}
+                    <Link to="/login" style={{ color: "#1976d2" }}>
+                        Giriş Yap
+                    </Link>
+                </p>
+            </div>
         </div>
     );
 }

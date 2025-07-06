@@ -20,5 +20,3 @@ public interface UsersRolesController {
     @DeleteMapping("/{userId}/deleteRole/{roleId}")
     ResponseEntity<String> deleteUserFromRole(@PathVariable int userId, @PathVariable UUID roleId);
 }
-
-
